@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Gestión de Tipos de Usuario</title>
+</head>
+
+<body>
+    <div class="app-container">
+        <div th:replace="fragments :: menu"></div>
+
+
+        <main class="main-content">
+            <h1>Gestión de Tipos de Usuario</h1>
+
+            <div class="form-section">
+                <h2>Crear Usuario</h2>
+                <form action="#" method="post">
+                    <input type="hidden" id="idUsuario" name="idUsuario" value="">
+                    <div class="form-group">
+                        <label for="nombreUsuario">Nombre de usuario:</label>
+                        <input type="text" id="nombreUsuario" name="nombreUsuario" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="correo">Correo electrónico:</label>
+                        <input type="email" id="correo" name="correo" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contrasena">Contraseña:</label>
+                        <input type="password" id="contrasena" name="contrasena" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipoUsuario">Rol del usuario:</label>
+                        <select id="tipoUsuario" name="tipoUsuario" class="form-control" required>
+                            <option value="">Selecciona un rol</option>
+                            <option value="admin">Administrador</option>
+                            <option value="usuario">Usuario Estándar</option>
+                            <option value="moderador">Moderador</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="accion" value="guardar">Crear Usuario</button>
+                    
+                </form>
+            </div>
+
+            <hr>
+
+            <div class="list-section">
+                 <h2>Usuarios Existentes</h2>
+                <table class="table" id="usuarios-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre </th>
+                            <th>Correo </th>
+                            <th>Fecha de registro </th>
+                              <th>Tipo de Usuario </th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr th:each="usuario : ${usuarios}">
+                            <td th:text="${usuario.idUsuario}">23</td>
+                            <td th:text="${usuario.nombreUsuario}">manuel</td>
+                            <td th:text="${usuario.correo}">jose@gmail.com</td>
+                            <td th:text="${#temporals.format(usuario.fecharegistro, 'dd-MM-yyyy HH:mm:ss')}"></td>
+                            <td th:text="${usuario.tipoUsuario.nombreTipo}">122</td>
+                            <td>
+                                <a href="" class="">Eliminar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </main>
+
+
+    </div>
+
+
+
+</body>
