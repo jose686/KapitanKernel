@@ -3,8 +3,8 @@ package com.laboratoriodecodigo.serviciosImpl;
 
 
 import com.laboratoriodecodigo.controlador.RecursoNoEncontradoException;
-import com.laboratoriodecodigo.modelo.Bloques_Post;
-import com.laboratoriodecodigo.modelo.Posts;
+import com.laboratoriodecodigo.modelo.blog.Bloques_Post;
+import com.laboratoriodecodigo.modelo.blog.Posts;
 import com.laboratoriodecodigo.repositorio.BloquesPostRepository;
 import com.laboratoriodecodigo.servicios.BloquesPostServicios;
 import com.laboratoriodecodigo.servicios.PostsServicios;

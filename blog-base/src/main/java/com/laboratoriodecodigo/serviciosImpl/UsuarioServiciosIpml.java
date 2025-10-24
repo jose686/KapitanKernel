@@ -2,8 +2,8 @@ package com.laboratoriodecodigo.serviciosImpl;
 
 
 import com.laboratoriodecodigo.controlador.RecursoNoEncontradoException;
-import com.laboratoriodecodigo.modelo.TiposUsuario;
-import com.laboratoriodecodigo.modelo.Usuario;
+import com.laboratoriodecodigo.modelo.usuarios.TiposUsuario;
+import com.laboratoriodecodigo.modelo.usuarios.Usuario;
 import com.laboratoriodecodigo.repositorio.UsuarioRepository;
 import com.laboratoriodecodigo.servicios.TipoUsuarioServicios;
 import com.laboratoriodecodigo.servicios.UsuarioServicios;
@@ -61,14 +61,12 @@ public class UsuarioServiciosIpml implements UsuarioServicios {
 
     @Override
     public Optional<Usuario> obtenerUsuarioPorId(Long id) {
-        if (usuarioRepository.existsByTipoUsuarioIdTipo(id)) {
-            // Lanza la excepción que el test está esperando
-            throw new DataIntegrityViolationException("No se puede eliminar el tipo de usuario, ya que hay usuarios asociados a él.");
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        if (usuario.isEmpty()) {
+
+            throw new RecursoNoEncontradoException("Usuario con ID " + id + " no encontrado.");
         }
-        if (!usuarioRepository.existsById(id)) {
-            throw new RecursoNoEncontradoException("Tipo de usuario con ID " + id + " no encontrado.");
-        }
-        return usuarioRepository.findById(id);
+        return usuario;
     }
 
     @Override

@@ -7,14 +7,15 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 
 import com.laboratoriodecodigo.controlador.RecursoNoEncontradoException;
-import com.laboratoriodecodigo.modelo.Imagenes;
+import com.laboratoriodecodigo.modelo.blog.Imagenes;
+import com.laboratoriodecodigo.modelo.usuarios.Usuario;
 import com.laboratoriodecodigo.repositorio.ImagenesRepository;
+import com.laboratoriodecodigo.repositorio.UsuarioRepository;
 import com.laboratoriodecodigo.servicios.ImagenesServicios;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,41 +23,52 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class ImagenesServiciosIpml implements ImagenesServicios {
 
-
     private final ImagenesRepository imagenRepository;
     private final Path rutaDeAlmacenamiento;
+    private final UsuarioRepository usuarioRepository;
 
-    public ImagenesServiciosIpml(ImagenesRepository imagenRepository, @Value("${file.upload-dir}") String uploadDir) {
+
+    public ImagenesServiciosIpml(ImagenesRepository imagenRepository, UsuarioRepository usuarioRepository) {
         this.imagenRepository = imagenRepository;
-        this.rutaDeAlmacenamiento = Paths.get(uploadDir).toAbsolutePath().normalize();
+        this.usuarioRepository = usuarioRepository;
+        String UPLOAD_DIR_STATIC = "blog-base/src/main/resources/static/uploads";
+
+        this.rutaDeAlmacenamiento = Paths.get(UPLOAD_DIR_STATIC).toAbsolutePath().normalize();
+        System.out.println("Ruta de Guardado de Imágenes: " + this.rutaDeAlmacenamiento.toString());
 
         try {
             Files.createDirectories(this.rutaDeAlmacenamiento);
         } catch (Exception ex) {
-            throw new RuntimeException("No se pudo crear el directorio de almacenamiento.");
+
+            throw new RuntimeException("No se pudo crear el directorio de almacenamiento estático: " + this.rutaDeAlmacenamiento, ex);
         }
     }
 
     @Override
-    public String guardarImagen(MultipartFile file) throws IOException {
+    public Imagenes guardarImagen(MultipartFile file, Long idUsuario, String altText)
+            throws IOException, RecursoNoEncontradoException {
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado con ID: " + idUsuario));
+
         String nombreArchivo = StringUtils.cleanPath(file.getOriginalFilename());
+
         try {
-            // Guarda el archivo en el sistema de ficheros
             Path rutaObjetivo = this.rutaDeAlmacenamiento.resolve(nombreArchivo);
             Files.copy(file.getInputStream(), rutaObjetivo, StandardCopyOption.REPLACE_EXISTING);
-
-            // Guarda el registro en la base de datos
-            Imagenes imagen = new Imagenes();
-            imagen.setNombreArchivo(nombreArchivo);
-            imagen.setRuta("/api/imagenes/" + nombreArchivo); // La URL para acceder al archivo
-            Imagenes imagenGuardada = imagenRepository.save(imagen);
-
-            return imagenGuardada.getRuta();
-
+            Imagenes imagen = Imagenes.builder()
+                    .nombreArchivo(nombreArchivo)
+                    .ruta("/uploads/" + nombreArchivo)
+                    .altText(altText)
+                    .usuarioSubida(usuario)
+                    .build();
+            return imagenRepository.save(imagen);
         } catch (IOException ex) {
-            throw new IOException("No se pudo guardar el archivo " + nombreArchivo);
+            ex.printStackTrace();
+            throw new IOException("No se pudo guardar el archivo " + nombreArchivo + ". Causa: " + ex.getMessage());
         }
     }
+
+
 
     @Override
     public String obtenerUrlImagenPorId(Long id) {
@@ -69,9 +81,9 @@ public class ImagenesServiciosIpml implements ImagenesServicios {
     }
 
     @Override
-    public List<String> listarTodasLasImagenes() {
-        List<Imagenes> imagenes = imagenRepository.findAll();
-        return imagenes.stream().map(Imagenes::getRuta).collect(Collectors.toList());
+    public List<Imagenes> listarTodasLasImagenes() {
+        return imagenRepository.findAll();
+
     }
 
     @Override

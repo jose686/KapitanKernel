@@ -1,7 +1,7 @@
 package com.laboratoriodecodigo.controlador;
 
 
-import com.laboratoriodecodigo.modelo.Categorias;
+import com.laboratoriodecodigo.modelo.blog.Categorias;
 import com.laboratoriodecodigo.servicios.CategoriasServicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/categorias")
-@CrossOrigin(origins = "*")
 public class CategoriaController {
 
     private final CategoriasServicios categoriaServicios;

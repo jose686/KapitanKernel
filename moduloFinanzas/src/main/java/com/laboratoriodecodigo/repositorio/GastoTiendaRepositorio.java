@@ -1,7 +1,9 @@
 package com.laboratoriodecodigo.repositorio;
 
-import com.laboratoriodecodigo.modelo.GastoTienda;
+import com.laboratoriodecodigo.modelo.finanzas.GastoTienda;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface GastoTiendaRepositorio extends JpaRepository<GastoTienda, Long> {
 }

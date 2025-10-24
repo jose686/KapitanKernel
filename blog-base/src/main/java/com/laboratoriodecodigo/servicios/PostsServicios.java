@@ -3,7 +3,7 @@ package com.laboratoriodecodigo.servicios;
 
 
 
-import com.laboratoriodecodigo.modelo.Posts;
+import com.laboratoriodecodigo.modelo.blog.Posts;
 
 import java.util.List;
 import java.util.Optional;

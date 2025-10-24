@@ -11,9 +11,9 @@ import java.util.Set;
 
 
 import com.laboratoriodecodigo.controlador.RecursoNoEncontradoException;
-import com.laboratoriodecodigo.modelo.Categorias;
-import com.laboratoriodecodigo.modelo.Posts;
-import com.laboratoriodecodigo.modelo.Usuario;
+import com.laboratoriodecodigo.modelo.blog.Categorias;
+import com.laboratoriodecodigo.modelo.blog.Posts;
+import com.laboratoriodecodigo.modelo.usuarios.Usuario;
 import com.laboratoriodecodigo.repositorio.PostsRepository;
 import com.laboratoriodecodigo.servicios.CategoriasServicios;
 import com.laboratoriodecodigo.servicios.PostsServicios;
@@ -39,7 +39,6 @@ public class PostsServiciosIpml implements PostsServicios {
 
     @Override
     public Posts crearPost(Posts posts, Long idAutor, List<Long> idsCategorias) {
-
 
         Optional<Usuario> autorOptional = usuarioServicios.obtenerUsuarioPorId(idAutor);
         if (!autorOptional.isPresent()) {

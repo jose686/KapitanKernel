@@ -4,7 +4,7 @@ package com.laboratoriodecodigo.servicios;
 
 
 
-import com.laboratoriodecodigo.modelo.Categorias;
+import com.laboratoriodecodigo.modelo.blog.Categorias;
 
 import java.util.List;
 import java.util.Optional;

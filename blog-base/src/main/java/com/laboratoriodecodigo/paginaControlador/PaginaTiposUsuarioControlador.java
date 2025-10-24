@@ -1,7 +1,7 @@
 package com.laboratoriodecodigo.paginaControlador;
 
 
-import com.laboratoriodecodigo.modelo.TiposUsuario;
+import com.laboratoriodecodigo.modelo.usuarios.TiposUsuario;
 import com.laboratoriodecodigo.servicios.TipoUsuarioServicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

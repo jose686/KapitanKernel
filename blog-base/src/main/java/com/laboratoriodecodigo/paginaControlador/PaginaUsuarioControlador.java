@@ -3,7 +3,7 @@ package com.laboratoriodecodigo.paginaControlador;
 import java.util.List;
 
 
-import com.laboratoriodecodigo.modelo.Usuario;
+import com.laboratoriodecodigo.modelo.usuarios.Usuario;
 import com.laboratoriodecodigo.servicios.TipoUsuarioServicios;
 import com.laboratoriodecodigo.servicios.UsuarioServicios;
 import org.springframework.beans.factory.annotation.Autowired;

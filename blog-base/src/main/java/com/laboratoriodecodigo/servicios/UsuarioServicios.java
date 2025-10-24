@@ -1,7 +1,7 @@
 package com.laboratoriodecodigo.servicios;
 
 
-import com.laboratoriodecodigo.modelo.Usuario;
+import com.laboratoriodecodigo.modelo.usuarios.Usuario;
 
 import java.util.List;
 import java.util.Optional;

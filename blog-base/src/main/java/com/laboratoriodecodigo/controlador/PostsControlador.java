@@ -2,7 +2,7 @@ package com.laboratoriodecodigo.controlador;
 
 
 
-import com.laboratoriodecodigo.modelo.Posts;
+import com.laboratoriodecodigo.modelo.blog.Posts;
 import com.laboratoriodecodigo.servicios.PostsServicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/postsControlador")
-@CrossOrigin(origins = "*")
 public class PostsControlador {
 
     private final PostsServicios postsServicios;
@@ -24,15 +23,19 @@ public class PostsControlador {
     }
 
     @PostMapping
-    public ResponseEntity<Posts> crearPost(@RequestBody Posts post, @RequestParam Long idAutor, @RequestParam List<Long> idsCategorias) {
+    public ResponseEntity<Posts> crearPost(@RequestBody Posts post) {
         try {
+            Long idAutor = post.getIdAutor().getIdUsuario(); // Extraer el ID del autor
+            List<Long> idsCategorias = post.getCategorias().stream()
+                    .map(c -> c.getIdCategoria())
+                    .toList();
             Posts nuevoPost = postsServicios.crearPost(post, idAutor, idsCategorias);
             return new ResponseEntity<>(nuevoPost, HttpStatus.CREATED);
         } catch (RecursoNoEncontradoException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<Posts> actualizarPost(@PathVariable Long id, @RequestBody Posts postActualizado, @RequestParam Long idAutor, @RequestParam List<Long> idsCategorias) {
         try {

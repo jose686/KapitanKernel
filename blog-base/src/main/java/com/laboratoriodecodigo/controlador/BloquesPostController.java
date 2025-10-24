@@ -2,7 +2,7 @@ package com.laboratoriodecodigo.controlador;
 
 
 
-import com.laboratoriodecodigo.modelo.Bloques_Post;
+import com.laboratoriodecodigo.modelo.blog.Bloques_Post;
 import com.laboratoriodecodigo.servicios.BloquesPostServicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/posts")
-@CrossOrigin(origins = "*")
 public class BloquesPostController {
 
     private final BloquesPostServicios bloquesPostServicios;

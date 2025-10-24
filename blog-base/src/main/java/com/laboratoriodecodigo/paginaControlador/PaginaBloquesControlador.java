@@ -3,12 +3,11 @@ package com.laboratoriodecodigo.paginaControlador;
 import java.util.List;
 
 
-import com.laboratoriodecodigo.modelo.Bloques_Post;
+import com.laboratoriodecodigo.modelo.blog.Bloques_Post;
 import com.laboratoriodecodigo.servicios.BloquesPostServicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 

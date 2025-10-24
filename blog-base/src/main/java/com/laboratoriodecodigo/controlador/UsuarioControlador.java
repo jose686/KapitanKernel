@@ -2,7 +2,7 @@ package com.laboratoriodecodigo.controlador;
 
 
 
-import com.laboratoriodecodigo.modelo.Usuario;
+import com.laboratoriodecodigo.modelo.usuarios.Usuario;
 import com.laboratoriodecodigo.servicios.UsuarioServicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin(origins = "*")
 public class UsuarioControlador {
 
     private final UsuarioServicios usuarioServicios;

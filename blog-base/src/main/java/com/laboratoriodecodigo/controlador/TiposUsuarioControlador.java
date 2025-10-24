@@ -1,7 +1,7 @@
 package com.laboratoriodecodigo.controlador;
 
 
-import com.laboratoriodecodigo.modelo.TiposUsuario;
+import com.laboratoriodecodigo.modelo.usuarios.TiposUsuario;
 import com.laboratoriodecodigo.servicios.TipoUsuarioServicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tiposUsuario")
-@CrossOrigin(origins = "*")
 public class TiposUsuarioControlador {
 
     private final TipoUsuarioServicios tipoUsuarioServicios;

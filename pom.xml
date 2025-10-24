@@ -27,6 +27,7 @@
         <module>moduloAnaliticas</module>
         <module>moduloFinanzas</module>
         <module>moduloTienda</module>
+        <module>moduloEntidades</module>
     </modules>
     <scm>
 		<connection/>

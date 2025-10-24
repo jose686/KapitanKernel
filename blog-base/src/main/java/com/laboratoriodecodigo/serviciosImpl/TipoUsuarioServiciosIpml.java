@@ -3,7 +3,7 @@ package com.laboratoriodecodigo.serviciosImpl;
 
 
 import com.laboratoriodecodigo.controlador.RecursoNoEncontradoException;
-import com.laboratoriodecodigo.modelo.TiposUsuario;
+import com.laboratoriodecodigo.modelo.usuarios.TiposUsuario;
 import com.laboratoriodecodigo.repositorio.TiposUsuarioRepository;
 import com.laboratoriodecodigo.repositorio.UsuarioRepository;
 import com.laboratoriodecodigo.servicios.TipoUsuarioServicios;
@@ -12,7 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 @Service
 public class TipoUsuarioServiciosIpml implements TipoUsuarioServicios {
 
@@ -56,7 +56,7 @@ public class TipoUsuarioServiciosIpml implements TipoUsuarioServicios {
         return tiposUsuarioRepository.findAll();
     }
 
-    // En TipoUsuarioServicios.java
+
 
     public TiposUsuario obtenerTipoUsuarioPorId(Long id) {
         return tiposUsuarioRepository.findById(id)

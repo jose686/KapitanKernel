@@ -5,7 +5,7 @@ package com.laboratoriodecodigo.servicios;
 
 
 
-import com.laboratoriodecodigo.modelo.TiposUsuario;
+import com.laboratoriodecodigo.modelo.usuarios.TiposUsuario;
 
 import java.util.List;
 

@@ -6,7 +6,7 @@ import java.util.Optional;
 
 
 import com.laboratoriodecodigo.controlador.RecursoNoEncontradoException;
-import com.laboratoriodecodigo.modelo.Categorias;
+import com.laboratoriodecodigo.modelo.blog.Categorias;
 import com.laboratoriodecodigo.repositorio.CategoriasRepository;
 import com.laboratoriodecodigo.servicios.CategoriasServicios;
 import org.springframework.stereotype.Service;

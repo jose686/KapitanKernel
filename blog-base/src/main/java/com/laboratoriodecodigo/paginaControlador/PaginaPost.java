@@ -3,8 +3,8 @@ package com.laboratoriodecodigo.paginaControlador;
 import java.util.List;
 
 
-import com.laboratoriodecodigo.modelo.Categorias;
-import com.laboratoriodecodigo.modelo.Posts;
+import com.laboratoriodecodigo.modelo.blog.Categorias;
+import com.laboratoriodecodigo.modelo.blog.Posts;
 import com.laboratoriodecodigo.servicios.CategoriasServicios;
 import com.laboratoriodecodigo.servicios.PostsServicios;
 import org.springframework.beans.factory.annotation.Autowired;

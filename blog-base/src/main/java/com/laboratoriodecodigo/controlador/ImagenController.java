@@ -1,6 +1,7 @@
 package com.laboratoriodecodigo.controlador;
 
 
+import com.laboratoriodecodigo.modelo.blog.Imagenes;
 import com.laboratoriodecodigo.servicios.ImagenesServicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/imagenes")
-@CrossOrigin(origins = "*")
 public class ImagenController {
 
     private final ImagenesServicios imagenServicios;
@@ -23,13 +23,19 @@ public class ImagenController {
         this.imagenServicios = imagenServicios;
     }
 
-    @PostMapping("/subir")
-    public ResponseEntity<String> subirImagen(@RequestParam("file") MultipartFile file) {
+    @PostMapping
+    public ResponseEntity<Imagenes> subirImagen(@RequestParam("file") MultipartFile file, @RequestParam("idUsuario") Long idUsuario, @RequestParam("altText") String altText
+    ) {
         try {
-            String urlImagen = imagenServicios.guardarImagen(file);
-            return new ResponseEntity<>(urlImagen, HttpStatus.CREATED);
+
+            Imagenes nuevaImagen = imagenServicios.guardarImagen(file, idUsuario, altText);
+            return new ResponseEntity<>(nuevaImagen, HttpStatus.CREATED);
         } catch (IOException e) {
-            return new ResponseEntity<>("Error al subir la imagen.", HttpStatus.INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (RecursoNoEncontradoException e) {
+
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -44,9 +50,9 @@ public class ImagenController {
     }
 
     @GetMapping
-    public ResponseEntity<List<String>> listarTodasLasImagenes() {
-        List<String> urls = imagenServicios.listarTodasLasImagenes();
-        return ResponseEntity.ok(urls);
+    public ResponseEntity<List<Imagenes>> listarTodasLasImagenes() {
+        List<Imagenes> imagenes = imagenServicios.listarTodasLasImagenes();
+        return ResponseEntity.ok(imagenes);
     }
 
     @DeleteMapping("/{id}")
