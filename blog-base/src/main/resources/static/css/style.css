@@ -1,0 +1,247 @@
+/* Estilos Generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos de la Barra de Navegación (Menu) */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 15px 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+}
+
+.nav-links a {
+    color: #ddd;
+    text-decoration: none;
+    padding: 0 15px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #007bff; /* Color azul para destacar */
+}
+
+/* Estilos para el botón de Login/Sesión (Opcional) */
+.nav-links a:last-child {
+    border: 1px solid #007bff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+/* Estilos para el Layout de Administración */
+
+.admin-layout {
+    display: flex; /* Habilita el layout de caja flexible */
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.sidebar {
+    flex: 0 0 250px; /* Ancho fijo de 250px para el sidebar */
+    background-color: #ffffff;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar h2 {
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.admin-nav-list {
+    list-style: none;
+    padding: 0;
+}
+
+.admin-nav-list li {
+    margin-bottom: 5px;
+}
+
+.admin-nav-list a {
+    display: block;
+    padding: 8px 10px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.admin-nav-list a:hover {
+    background-color: #f0f8ff; /* Fondo azul muy claro al pasar el ratón */
+    color: #007bff;
+}
+
+.separator {
+    color: #ccc;
+    font-size: 0.8em;
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 1px dashed #eee;
+}
+
+.admin-content {
+    flex-grow: 1; /* El contenido principal ocupa el espacio restante */
+    padding: 20px 30px;
+}
+
+/* Estilos Específicos para Formularios y Tablas de Administración */
+
+.standard-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border: 1px solid #eee;
+}
+
+.standard-form label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.standard-form input[type="text"],
+.standard-form input[type="email"],
+.standard-form input[type="password"],
+.standard-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Asegura que el padding no añada ancho extra */
+}
+
+/* Estilos de Botones */
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none; /* Para enlaces con clase btn */
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Estilos de Tablas */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.data-table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.data-table tr:hover {
+    background-color: #f0f8ff;
+}
+
+/* Mensajes */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.large-textarea {
+    width: 100%;
+    min-height: 250px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    resize: vertical;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+
+.standard-form input[type="text"],
+.standard-form input[type="email"],
+.standard-form input[type="number"],
+.standard-form select {
+    width: 100%;
+}
+.standard-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}

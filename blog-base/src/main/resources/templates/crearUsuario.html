@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Usuario | Administración</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<div th:insert="~{layout/menu :: main-menu}"></div>
+
+<div class="admin-layout">
+    <div th:insert="~{layout/admin_menu :: admin-sidebar}"></div>
+
+    <main class="admin-content">
+        <h1>Gestión de Usuarios</h1>
+
+        <div class="form-section">
+            <h2>Crear Nuevo Usuario</h2>
+            <form th:action="@{/usuarios/guardar}" th:object="${nuevoUsuario}" method="post" class="standard-form">
+
+                <label for="nombreUsuario">Nombre de Usuario:</label>
+                <input type="text" id="nombreUsuario" th:field="*{nombreUsuario}" required>
+
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" id="correo" th:field="*{correo}" required>
+
+                <label for="contrasena_hash">Contraseña:</label>
+                <input type="password" id="contrasena_hash" th:field="*{contrasena_hash}" required>
+
+                <label for="tipoUsuario">Rol (Tipo de Usuario):</label>
+                <select id="tipoUsuario" th:field="*{tipoUsuario}" required>
+                    <option value="">-- Seleccione Rol --</option>
+                    <option th:each="tipo : ${tiposDisponibles}"
+                            th:value="${tipo.idTipo}"
+                            th:text="${tipo.nombreTipo}">
+                        ROLE_USER
+                    </option>
+                </select>
+
+                <button type="submit" class="btn btn-primary">Crear Usuario</button>
+            </form>
+        </div>
+
+        <div class="list-section">
+            <h2>Usuarios Existentes</h2>
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.idUsuario}">1</td>
+
+                    <td th:text="${usuario.nombreUsuario}">pepe6</td>
+
+                    <td th:text="${usuario.correo}">pepe6@mail.com</td>
+
+                    <td th:text="${usuario.tipoUsuario.nombreTipo}">ROLE_USER</td>
+                    <td>
+                        <a th:href="@{/usuarios/editar/{idUsuario}(idUsuario=${usuario.idUsuario})}" class="btn btn-secondary">Editar</a>
+
+                        <form th:action="@{/usuarios/eliminar/{idUsuario}(idUsuario=${usuario.idUsuario})}" method="post" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que quieres eliminar a este usuario?');">
+
+                            <input type="hidden" name="_method" value="DELETE" />
+
+                            <button type="submit" class="btn btn-danger btn-small">Eliminar</button>
+                        </form>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

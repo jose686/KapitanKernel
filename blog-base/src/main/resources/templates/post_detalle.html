@@ -1,0 +1,21 @@
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${post.titulo}"></title>
+</head>
+<body>
+
+<h1 th:text="${post.titulo}"></h1>
+<p>Publicado el: <span th:text="${#temporals.format(post.fechaPublicacion, 'dd MMMM yyyy')}"></span></p>
+
+<div th:if="${post.imagenDestacada}">
+    <img th:src="@{${post.imagenDestacada.ruta}}" th:alt="${post.imagenDestacada.altText}">
+</div>
+
+<div class="post-content">
+    <div th:each="bloque : ${post.bloquesDeContenido}">
+        <p th:text="${bloque.contenido}"></p>
+    </div>
+</div>
+
+</body>
+</html>

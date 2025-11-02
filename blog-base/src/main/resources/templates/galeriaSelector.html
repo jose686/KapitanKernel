@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Selector de Imagen de Galería</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .imagen-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .imagen-card img {
+            max-width: 100%;
+            height: auto;
+            max-height: 100px;
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Seleccionar Imagen</h1>
+<p>Haz clic en 'Seleccionar' para usar la imagen en el bloque del post.</p>
+<hr>
+
+<div class="galeria-grid">
+    <div th:each="imagen : ${imagenes}" class="imagen-card">
+
+        <img th:src="@{${imagen.ruta}}" th:alt="${imagen.altText}" />
+        <p>ID: <span th:text="${imagen.idImagen}"></span></p>
+
+        <button type="button" class="btn btn-primary btn-small"
+                th:data-ruta="${imagen.ruta}"
+                th:data-nombre="${imagen.nombreArchivo}"
+                th:data-id="${imagen.idImagen}"
+                onclick="seleccionarImagenDesdeBoton(this)"> Seleccionar
+        </button>
+
+    </div>
+</div>
+
+<script>
+    // Nueva función que lee los valores de los atributos data-* del botón
+    function seleccionarImagenDesdeBoton(boton) {
+        const id = boton.getAttribute('data-id');
+        const url = boton.getAttribute('data-ruta');
+        const nombre = boton.getAttribute('data-nombre');
+
+        // Llamada a la función global que se encuentra en bloquesPost.html
+        if (window.opener && window.opener.imagenSeleccionada) {
+            window.opener.imagenSeleccionada(id, url, nombre);
+            window.close(); // Cierra la ventana del selector después de la selección
+        } else {
+            alert("Error: No se puede comunicar con la ventana principal.");
+        }
+    }
+
+    // NOTA: Ya no necesitamos la función 'seleccionarImagen(id, url, nombre)' antigua.
+</script>
+
+</body>
+</html>

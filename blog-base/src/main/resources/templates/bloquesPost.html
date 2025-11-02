@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Editor de Contenido: ' + ${post.titulo}"></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+
+<div th:insert="~{layout/menu :: main-menu}"></div>
+
+<div class="admin-layout">
+    <div th:insert="~{layout/admin_menu :: admin-sidebar}"></div>
+
+    <main class="admin-content">
+        <h1 th:text="'Editor de Contenido para: ' + ${post.titulo}"></h1>
+        <p>ID Post: <span th:text="${post.idTipo}"></span></p>
+
+        <div th:if="${mensaje}" class="alert success" th:text="${mensaje}"></div>
+        <div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+        <a th:href="@{/posts/editar/{idPost}(idPost=${post.idTipo})}" class="btn btn-secondary">
+            ← Volver a Metadatos
+        </a>
+
+        <hr/>
+
+        <div class="list-section">
+            <h3>Bloques Actuales (Total: <span th:text="${bloques.size()}">0</span>)</h3>
+
+            <div th:each="bloque : ${bloques}" class="card bloque-card" style="margin-bottom: 10px; padding: 15px; border: 1px solid #ccc;">
+                <p><strong>Orden:</strong> <span th:text="${bloque.orden}"></span> -
+                    <strong>Tipo:</strong> <span th:text="${bloque.tipoBloque}"></span></p>
+
+                <div th:if="${bloque.tipoBloque.name() == 'IMAGEN' and bloque.imagen != null}">
+                    <img th:src="@{${bloque.imagen.ruta}}" th:alt="${bloque.contenido}" style="max-width: 200px; display: block;"/>
+                    <small>ID Imagen: <span th:text="${bloque.imagen.idImagen}"></span></small>
+                </div>
+                <textarea th:if="${bloque.tipoBloque.name() != 'IMAGEN'}" th:text="${bloque.contenido}" rows="3" readonly style="width: 100%;"></textarea>
+
+                <div>
+                    <a th:href="@{/posts/{idPost}/bloques/{idBloque}/editar(idPost=${post.idTipo}, idBloque=${bloque.idBloque})}" class="btn btn-small btn-primary">Editar</a>
+
+                    <form method="post" th:action="@{/posts/{idPost}/bloques/eliminar/{idBloque}(idPost=${post.idTipo}, idBloque=${bloque.idBloque})}" style="display:inline;">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button type="submit" class="btn btn-small btn-danger" onclick="return confirm('¿Eliminar este bloque?');">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="form-section">
+            <h3>Añadir Nuevo Bloque</h3>
+            <form th:action="@{/posts/{idPost}/bloques/guardar(idPost=${post.idTipo})}"
+                  th:object="${nuevoBloque}" method="post" class="standard-form">
+
+                <label for="tipoBloque">Tipo de Bloque:</label>
+                <select id="tipoBloque" th:field="*{tipoBloque}" required onchange="mostrarSelectorBloque()">
+                    <option th:each="tipo : ${T(com.laboratoriodecodigo.modelo.blog.TipoBloque).values()}"
+                            th:value="${tipo}" th:text="${tipo}">TEXTO</option>
+                </select>
+
+                <div id="seccionImagen" style="display:none; padding: 10px 0;">
+
+                    <label>Imagen Seleccionada:</label>
+
+                    <input type="hidden" th:field="*{imagen.idImagen}" id="idImagenSeleccionada" />
+
+                    <p id="infoImagenSeleccionada">Ninguna imagen seleccionada.</p>
+                    <img id="previewImagenSeleccionada" style="max-width: 150px; margin: 5px 0; display: none;" />
+
+                    <button type="button" class="btn btn-secondary" onclick="abrirSelectorDeGaleria()">
+                        Seleccionar de Galería
+                    </button>
+
+                    <label for="altTextContenido">Texto Alternativo (Alt Text):</label>
+                    <textarea id="altTextContenido" th:field="*{contenido}" rows="2" class="large-textarea"></textarea>
+                </div>
+
+                <div id="seccionTexto">
+                    <label for="contenido">Contenido (Texto/Encabezado):</label>
+                    <textarea id="contenidoTexto" th:field="*{contenido}" rows="5" required class="large-textarea"></textarea>
+                </div>
+
+                <input type="hidden" th:field="*{orden}" th:value="${bloques.size() + 1}" />
+
+                <button type="submit" class="btn btn-primary">Añadir Bloque</button>
+            </form>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // Asegurarse de que el estado inicial se aplique al cargar
+        mostrarSelectorBloque();
+    });
+
+    function mostrarSelectorBloque() {
+        const tipoBloque = document.getElementById('tipoBloque').value;
+        const seccionImagen = document.getElementById('seccionImagen');
+        const seccionTexto = document.getElementById('seccionTexto');
+
+        // ELEMENTOS CONTROLADOS POR 'disabled'
+        const textareaTexto = document.getElementById('contenidoTexto');
+        const textareaAlt = document.getElementById('altTextContenido');
+        const inputIdImagen = document.getElementById('idImagenSeleccionada');
+
+        // 1. LÓGICA PARA BLOQUE DE IMAGEN
+        if (tipoBloque === 'IMAGEN') {
+            seccionImagen.style.display = 'block';
+            seccionTexto.style.display = 'none';
+
+            // ✅ HABILITAR CAMPOS DE IMAGEN Y HACER REQUERIDOS
+            if (textareaAlt) {
+                textareaAlt.removeAttribute('disabled');
+                textareaAlt.setAttribute('required', 'required');
+            }
+            if (inputIdImagen) inputIdImagen.removeAttribute('disabled');
+
+            // 🚫 DESHABILITAR CAMPOS DE TEXTO
+            if (textareaTexto) {
+                textareaTexto.setAttribute('disabled', 'disabled');
+                // Al deshabilitar, quitamos el 'required' para evitar errores de envío.
+                textareaTexto.removeAttribute('required');
+            }
+
+        // 2. LÓGICA PARA BLOQUE DE TEXTO O ENCABEZADO
+        } else {
+            seccionImagen.style.display = 'none';
+            seccionTexto.style.display = 'block';
+
+            // ✅ HABILITAR CAMPOS DE TEXTO Y HACER REQUERIDOS
+            if (textareaTexto) {
+                textareaTexto.removeAttribute('disabled');
+                textareaTexto.setAttribute('required', 'required');
+            }
+
+            // 🚫 DESHABILITAR CAMPOS DE IMAGEN
+            if (textareaAlt) {
+                textareaAlt.setAttribute('disabled', 'disabled');
+                textareaAlt.removeAttribute('required'); // No requerido si está deshabilitado
+            }
+            if (inputIdImagen) inputIdImagen.setAttribute('disabled', 'disabled');
+        }
+    }
+    function abrirSelectorDeGaleria() {
+        // La ruta mapeada a PaginaGaleriaControlador
+        window.open('/admin/galeria/selector', 'SelectorGaleria', 'width=800,height=600,scrollbars=yes,resizable=yes');
+    }
+
+    // 2. Esta función recibe los datos de la ventana de la galería (window.opener)
+    function imagenSeleccionada(id, url, nombre) {
+        document.getElementById('idImagenSeleccionada').value = id;
+
+        // Mostrar la URL y el preview
+        document.getElementById('infoImagenSeleccionada').innerText = `ID: ${id} | ${nombre}`;
+        const preview = document.getElementById('previewImagenSeleccionada');
+        preview.src = url;
+        preview.style.display = 'block';
+    }
+
+</script>
+</body>
+</html>

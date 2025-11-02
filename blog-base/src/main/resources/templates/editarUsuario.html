@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Usuario | Administración</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+
+<div th:insert="~{layout/menu :: main-menu}"></div>
+
+<div class="admin-layout">
+
+    <div th:insert="~{layout/admin_menu :: admin-sidebar}"></div>
+
+    <main class="admin-content">
+        <h1>Gestión de Usuarios</h1>
+
+        <div class="form-section">
+            <h2>Editar Usuario: <span th:text="${usuarioAEditar.nombreUsuario}"></span></h2>
+
+            <form th:action="@{/usuarios/editar/{idUsuario}(idUsuario=${usuarioAEditar.idUsuario})}" th:object="${usuarioAEditar}" method="post" class="standard-form">
+
+                <input type="hidden" name="_method" value="PUT" />
+
+                <label for="nombreUsuario">Nombre de Usuario:</label>
+                <input type="text" id="nombreUsuario" th:field="*{nombreUsuario}" required>
+
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" id="correo" th:field="*{correo}" required>
+
+                <label for="nuevaContrasena">Nueva Contraseña (Dejar vacío para no cambiar):</label>
+                <input type="password" id="nuevaContrasena" name="nuevaContrasena">
+
+                <label for="tipoUsuario">Rol (Tipo de Usuario):</label>
+                <select id="tipoUsuario" th:field="*{tipoUsuario}" required>
+                    <option th:each="tipo : ${tiposDisponibles}"
+                            th:value="${tipo.idTipo}"
+                            th:text="${tipo.nombreTipo}">
+                        ROLE_USER
+                    </option>
+                </select>
+
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <a th:href="@{/usuarios}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

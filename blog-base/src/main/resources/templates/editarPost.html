@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Post | Administración</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+
+<div th:insert="~{layout/menu :: main-menu}"></div>
+
+<div class="admin-layout">
+    <div th:insert="~{layout/admin_menu :: admin-sidebar}"></div>
+
+    <main class="admin-content">
+        <h1>Gestión de Entradas del Blog</h1>
+
+        <div class="form-section">
+            <h2>Editando: <span th:text="${postAEditar.titulo}">Título del Post</span></h2>
+
+            <form th:action="@{/posts/editar/{idPost}(idPost=${postAEditar.idTipo})}"
+                  th:object="${postAEditar}"
+                  method="post"
+                  class="standard-form">
+
+                <input type="hidden" name="_method" value="PUT" />
+
+                <label for="titulo">Título de la Entrada:</label>
+                <input type="text" id="titulo" th:field="*{titulo}" required>
+
+                <label for="metaDescripcion">Meta Descripción (SEO):</label>
+                <textarea id="metaDescripcion" th:field="*{metaDescripcion}" rows="2"></textarea>
+
+                <label for="idAutor">Autor:</label>
+                <select id="idAutor" name="idAutor" required>
+                    <option th:each="autor : ${autoresDisponibles}"
+                            th:value="${autor.idUsuario}"
+                            th:text="${autor.nombreUsuario}"
+                            th:selected="${autor.idUsuario == postAEditar.idAutor.idUsuario}">
+                        Autor
+                    </option>
+                </select>
+
+                <label for="idsCategorias">Categorías (Selección Múltiple):</label>
+                <select id="idsCategorias" name="idsCategorias" multiple required>
+                    <option th:each="cat : ${todasLasCategorias}"
+                            th:value="${cat.idCategoria}"
+                            th:text="${cat.nombreCategoria}"
+                            th:selected="${postAEditar.categorias.contains(cat)}">
+                        Categoría
+                    </option>
+                </select>
+
+                <label for="estado">Estado de Publicación:</label>
+                <select id="estado" th:field="*{estado}" required>
+                    <option th:each="status : ${T(com.laboratoriodecodigo.modelo.blog.PostStatus).values()}"
+                            th:value="${status}"
+                            th:text="${status}">
+                        BORRADOR
+                    </option>
+                </select>
+
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <a th:href="@{/posts}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+
+        <hr>
+
+
+            <div class="list-section">
+                <h3>Contenido de la Entrada (Bloques)</h3>
+                <p>Edita el contenido del post añadiendo, reordenando o eliminando bloques.</p>
+
+                <a th:href="@{/posts/{idPost}/bloques(idPost=${postAEditar.idTipo})}"
+                   class="btn btn-primary btn-large">
+                    Ir al Editor de Contenido
+                </a>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

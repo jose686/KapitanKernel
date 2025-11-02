@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Galería de Imágenes</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <style>
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .imagen-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .imagen-card img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 10px;
+            max-height: 150px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+
+<div th:insert="~{layout/menu :: main-menu}"></div>
+
+<div class="admin-layout">
+    <div th:insert="~{layout/admin_menu :: admin-sidebar}"></div>
+
+    <main class="admin-content">
+        <h1>Galería de Imágenes</h1>
+
+        <div th:if="${mensaje}" class="alert success" th:text="${mensaje}"></div>
+        <div th:if="${error}" class="alert danger" th:text="${error}"></div>
+
+        <hr>
+
+        <div class="form-section">
+            <h3>Subir Nueva Imagen</h3>
+            <form th:action="@{/admin/galeria/subir}" method="post" enctype="multipart/form-data" class="standard-form">
+
+                <label for="file">Seleccionar Archivo:</label>
+                <input type="file" id="file" name="file" required>
+
+                <label for="altText">Texto Alternativo (Alt Text):</label>
+                <input type="text" id="altText" name="altText" required>
+
+                <input type="hidden" name="idUsuario" value="1" />
+
+                <button type="submit" class="btn btn-primary">Subir a Galería</button>
+            </form>
+        </div>
+
+        <hr>
+
+        <h2>Imágenes Existentes (<span th:text="${imagenes.size()}">0</span>)</h2>
+
+        <div class="galeria-grid">
+            <div th:each="imagen : ${imagenes}" class="imagen-card">
+                <img th:src="@{${imagen.ruta}}" th:alt="${imagen.altText}" />
+                <p>ID: <span th:text="${imagen.idImagen}"></span></p>
+                <p>Archivo: <small th:text="${imagen.nombreArchivo}"></small></p>
+
+                <form th:action="@{/admin/galeria/eliminar/{idImagen}(idImagen=${imagen.idImagen})}"
+                      method="post"
+                      style="display:inline;">
+
+                    <input type="hidden" name="_method" value="DELETE" /> <button type="submit" class="btn btn-danger btn-small"
+                                                                                  onclick="return confirm('¿Estás seguro de eliminar esta imagen?');">
+                    Eliminar
+                </button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

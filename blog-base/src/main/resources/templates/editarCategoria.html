@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Categoría</title>
+</head>
+<body>
+<div th:insert="~{layout/menu :: main-menu}"></div>
+
+<main class="admin-content">
+    <h1>Editar Categoría</h1>
+
+    <div class="form-section">
+        <h2>Modificar <span th:text="${categoriaAEditar.nombreCategoria}"></span></h2>
+
+        <form th:action="@{/categorias/actualizar/{id}(id=${categoriaAEditar.idCategoria})}"
+              th:object="${categoriaAEditar}"
+              method="post"
+              class="standard-form">
+
+            <input type="hidden" th:field="*{idCategoria}" />
+
+            <label for="nombre">Nombre de la Categoría:</label>
+            <input type="text" id="nombre" th:field="*{nombreCategoria}" required>
+
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <a th:href="@{/categorias}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</main>
+</body>
+</html>

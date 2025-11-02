@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kapitan Kernel: El Núcleo de la Computación</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/public.css}">
+</head>
+<body>
+
+<div th:insert="~{layout/menu :: main-menu}"></div>
+
+<main class="landing-content">
+
+    <section class="hero-section">
+        <div class="hero-text-container">
+            <h1 class="hero-title">KAPITAN KERNEL</h1>
+            <h2 class="hero-subtitle">Tu Laboratorio de Hardware Personalizado y Novedades Tecnológicas.</h2>
+            <p class="hero-description">
+                Sumérgete en el **núcleo** de la computación. Análisis a fondo de CPU, GPU, guías de montaje y la tienda de componentes más especializada.
+            </p>
+            <div class="hero-actions">
+                <a th:href="@{/blog}" class="btn btn-primary btn-large">
+                    ▶ Explorar el Blog
+                </a>
+                <a th:href="@{/tienda}" class="btn btn-secondary btn-large disabled-link">
+                    Tienda (Próximamente)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="value-section">
+        <h3>¿Por qué Kapitan Kernel?</h3>
+        <div class="card-grid">
+            <div class="value-card">
+                <h4>🛠️ Hardware de Alto Nivel</h4>
+                <p>Análisis imparciales y *benchmarks* rigurosos de los últimos componentes del mercado.</p>
+            </div>
+            <div class="value-card">
+                <h4>🧠 Conocimiento Profundo</h4>
+                <p>Guías paso a paso, trucos de optimización y la ciencia detrás del rendimiento.</p>
+            </div>
+            <div class="value-card">
+                <h4>🛒 PCs a Medida (Futuro)</h4>
+                <p>Próximamente: Construye tu PC ideal desde cero con componentes seleccionados por expertos.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="latest-blog-section">
+        <h3>Últimas Novedades del Núcleo</h3>
+
+        <div class="post-preview-grid">
+            <div th:each="post : ${ultimosPosts}" class="post-card">
+                <a th:href="@{/blog/{slug}(slug=${post.slug})}" style="text-decoration: none;">
+                    <img th:src="@{${post.imagenDestacada.ruta}}" alt="Imagen del Post" class="post-thumbnail"/>
+                    <h4><span th:text="${post.titulo}">Título del Artículo</span></h4>
+                    <p class="post-snippet"><span th:text="${post.metaDescripcion}">Resumen del post...</span></p>
+                </a>
+            </div>
+
+            <p th:if="${#lists.isEmpty(ultimosPosts)}" class="no-posts">
+                Aún estamos cargando el contenido. ¡Vuelve pronto!
+            </p>
+        </div>
+
+        <a th:href="@{/blog}" class="btn btn-secondary view-all-btn">Ver Todos los Artículos</a>
+    </section>
+</main>
+
+<div th:insert="~{layout/footer :: site-footer}"></div>
+
+</body>
+</html>

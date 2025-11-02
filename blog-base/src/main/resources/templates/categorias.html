@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Categorías</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<div th:insert="~{layout/menu :: main-menu}"></div>
+
+<div class="admin-layout">
+    <div th:insert="~{layout/admin_menu :: admin-sidebar}"></div>
+
+    <main class="admin-content">
+        <h1>Gestión de Categorías</h1>
+
+        <div class="form-section">
+            <h2>Crear Nueva Categoría</h2>
+            <form th:action="@{/categorias/guardar}" th:object="${nuevaCategoria}" method="post" class="standard-form">
+
+                <label for="nombreCategoria">Nombre de la Categoría:</label>
+                <input type="text" id="nombreCategoria" th:field="*{nombreCategoria}" required>
+
+                <button type="submit" class="btn btn-primary">Guardar Categoría</button>
+            </form>
+        </div>
+
+        <div class="list-section">
+            <h2>Categorías Existentes</h2>
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cat : ${categorias}">
+                    <td th:text="${cat.idCategoria}">1</td>
+
+                    <td th:text="${cat.nombreCategoria}">Noticias</td>
+                    <td>
+                        <a th:href="@{/categorias/editar/{id}(id=${cat.idCategoria})}" class="btn btn-secondary btn-small">Editar</a>
+
+                        <a th:href="@{/categorias/eliminar/{id}(id=${cat.idCategoria})}" class="btn btn-danger btn-small"
+                           onclick="return confirm('¿Estás seguro de que quieres eliminar esta categoría?');">
+                            Eliminar
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

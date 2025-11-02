@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+<aside th:fragment="admin-sidebar" class="sidebar">
+    <h2>Gestión</h2>
+
+    <ul class="admin-nav-list">
+        <li><a th:href="@{/admin}">Dashboard</a></li>
+
+        <li class="separator">Usuarios</li>
+        <li><a th:href="@{/tipos-de-usuario}">Tipos de Usuario</a></li>
+        <li><a th:href="@{/usuarios}">Crear y Listar Usuarios</a></li>
+
+        <li class="separator">Tienda</li>
+        <li><a th:href="@{/admin/productos}">Gestión de Productos</a></li>
+
+        <li class="separator">Blog</li>
+        <li><a th:href="@{/posts}">Gestión del Blog (Posts)</a></li>
+
+        <li><a th:href="@{/categorias}">Gestión de Categorías</a></li>
+
+        <li>
+            <a th:href="@{/admin/galeria}">
+                Galería de Imágenes
+            </a>
+        </li>
+    </ul>
+
+</aside>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Posts | Administración</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+
+<div th:insert="~{layout/menu :: main-menu}"></div>
+
+<div class="admin-layout">
+    <div th:insert="~{layout/admin_menu :: admin-sidebar}"></div>
+
+    <main class="admin-content">
+        <h1>Gestión de Entradas del Blog (Posts)</h1>
+
+        <div th:if="${mensaje}" class="alert success" th:text="${mensaje}">Post guardado con éxito.</div>
+        <div th:if="${error}" class="alert error" th:text="${error}">Error al guardar el Post.</div>
+
+        <div class="form-section">
+            <h2>Crear Nueva Entrada</h2>
+            <form th:action="@{/posts/guardar}" th:object="${nuevoPost}" method="post" class="standard-form">
+
+                <label for="titulo">Título de la Entrada:</label>
+                <input type="text" id="titulo" th:field="*{titulo}" required>
+
+                <label for="metaDescripcion">Meta Descripción (SEO):</label>
+                <textarea id="metaDescripcion" th:field="*{metaDescripcion}" rows="2"></textarea>
+
+                <label for="idImagenDestacada">Imagen Destacada (URL/Archivo):</label>
+                <select class="form-control" id="idImagenDestacada" name="idImagenDestacada">
+                    <option value="">-- Sin Imagen Destacada --</option>
+                    <option th:each="img : ${imagenesDisponibles}"
+                            th:value="${img.idImagen}"
+                            th:text="${img.nombreArchivo} + ' (' + ${img.idImagen} + ')'">
+                        Nombre de Archivo
+                    </option>
+                </select>
+                <input type="hidden" name="idAutor" value="1" />
+
+                <label for="idsCategorias">Categorías (Selección Múltiple):</label>
+                <select id="idsCategorias" name="idsCategorias" multiple required>
+                    <option th:each="cat : ${todasLasCategorias}"
+                            th:value="${cat.idCategoria}"
+                            th:text="${cat.nombreCategoria}">
+                        Categoría Ejemplo
+                    </option>
+                </select>
+
+                <input type="hidden" th:field="*{estado}" value="BORRADOR" />
+
+                <button type="submit" class="btn btn-primary">Crear Entrada (Borrador)</button>
+            </form>
+        </div>
+
+        <hr/>
+
+        <div class="list-section">
+            <h2>Entradas Existentes</h2>
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Categorías</th>
+                    <th>Fecha Pub.</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="post : ${posts}">
+                    <td th:text="${post.idTipo}">1</td> <td th:text="${post.titulo}">Mi Primer Post</td>
+                    <td th:text="${post.idAutor.nombreUsuario}">Autor Nombre</td>
+
+                    <td>
+                            <span th:each="cat, stat : ${post.categorias}">
+                                <span th:text="${cat.nombreCategoria}"></span><span th:if="${!stat.last}">, </span>
+                            </span>
+                    </td>
+
+                    <td th:text="${#temporals.format(post.fechaPublicacion, 'dd-MM-yyyy HH:mm')}">01-01-2025</td>
+                    <td th:text="${post.estado}">BORRADOR</td>
+                    <td>
+                        <a th:href="@{/posts/editar/{idPost}(idPost=${post.idTipo})}" class="btn btn-secondary">Editar</a>
+
+                        <form th:action="@{/posts/eliminar/{idPost}(idPost=${post.idTipo})}" method="post" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este post?');">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <button type="submit" class="btn btn-danger btn-small">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

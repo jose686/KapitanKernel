@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tipos de Usuario | Administración</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}"> </head>
+<body>
+<div th:insert="~{layout/menu :: main-menu}"></div>
+
+<div class="admin-layout">
+    <div th:insert="~{layout/admin_menu :: admin-sidebar}"></div>
+
+    <main class="admin-content">
+        <h1>Gestión de Tipos de Usuario (Roles)</h1>
+
+        <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}">Rol guardado con éxito.</div>
+
+        <div class="form-section">
+            <h2>Crear Nuevo Rol</h2>
+            <form th:action="@{/tipos-de-usuario/guardar}" th:object="${nuevoTipo}" method="post" class="standard-form">
+                <input type="hidden" th:field="*{idTipo}">
+
+                <label for="nombreTipo">Nombre del Rol:</label>
+                <input type="text" id="nombreTipo" th:field="*{nombreTipo}" required>
+                <button type="submit" class="btn btn-primary">Guardar Rol</button>
+            </form>
+        </div>
+
+        <div class="list-section">
+            <h2>Roles Existentes</h2>
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre del Rol</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="tipo : ${tipos}">
+                    <td th:text="${tipo.idTipo}">1</td>
+                    <td th:text="${tipo.nombreTipo}">ROLE_STORE_MANAGER</td>
+                    <td>
+                        <a th:href="@{/tipos-de-usuario/eliminar/{idTipo}(idTipo=${tipo.idTipo})}"
+                           onclick="return confirm('¿Estás seguro de que quieres eliminar este rol?')"
+                           class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

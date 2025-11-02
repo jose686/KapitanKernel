@@ -1,0 +1,189 @@
+/* =======================================================
+   ESTILOS ESPECÍFICOS DE LA PÁGINA PRINCIPAL (Kapitan Kernel)
+   ======================================================= */
+
+/* --- Estilos Generales y Layout --- */
+
+/* Añadir o modificar este bloque */
+body {
+    background-color: #101820; /* Gris muy oscuro, casi negro. Ideal para temas de hardware. */
+    color: #E8F0F2; /* Color de texto base claro */
+    font-family: Arial, sans-serif; /* Si no lo tienes definido en base.css */
+}
+
+.landing-content {
+    max-width: 1200px; /* Ancho máximo del contenido central */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- SECCIÓN HERO (La parte más importante) --- */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 100px 0;
+    margin-bottom: 50px;
+    background: linear-gradient(180deg, rgba(10, 25, 41, 0.9), rgba(10, 25, 41, 0.5)), url('../images/hardware_background.jpg') center center no-repeat;
+    background-size: cover;
+    color: #E8F0F2; /* Texto claro */
+    border-radius: 8px;
+}
+
+.hero-title {
+    font-size: 3.5em;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #4CAF50; /* Color de acento verde tecnológico */
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    margin-bottom: 10px;
+}
+
+.hero-subtitle {
+    font-size: 1.8em;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.hero-description {
+    font-size: 1.1em;
+    max-width: 700px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+/* --- Botones --- */
+.hero-actions .btn {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 0 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-primary {
+    background-color: #4CAF50; /* Verde de acento */
+    color: #101820; /* Texto oscuro */
+    border: 2px solid #4CAF50;
+}
+
+.btn-primary:hover {
+    background-color: #5fb962;
+    transform: translateY(-2px);
+}
+
+
+.btn-secondary {
+    /* Mantenemos el color del texto y el borde claro */
+    background-color: rgba(232, 240, 242, 0.1); /* Antes era transparente, ahora tiene un fondo muy sutil */
+    color: #E8F0F2;
+    border: 2px solid #E8F0F2;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(232, 240, 242, 0.2); /* Un poco más oscuro al pasar el ratón */
+}
+
+.disabled-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+
+/* --- SECCIÓN DE VALOR (Tarjetas) --- */
+/* Ajustar la sección de valor */
+.value-section {
+    padding: 50px 0;
+    text-align: center;
+    /* Remover cualquier background-color que pudiera ser blanco */
+}
+.card-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.value-card {
+    flex: 1;
+    background-color: #182736; /* Fondo de tarjeta oscuro */
+    padding: 30px;
+    border-radius: 8px;
+    border-left: 5px solid #4CAF50;
+    text-align: left;
+}
+
+.value-card h4 {
+    color: #E8F0F2;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+.value-card p {
+    color: #AAB7C4;
+}
+
+/* --- SECCIÓN DE ÚLTIMOS BLOGS --- */
+.latest-blog-section {
+    padding: 50px 0 100px;
+    text-align: center;
+}
+
+.latest-blog-section h3 {
+    font-size: 2em;
+    margin-bottom: 40px;
+}
+
+.post-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.post-card {
+    background-color: #182736;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.post-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.post-card h4 {
+    padding: 15px;
+    font-size: 1.2em;
+    color: #4CAF50;
+}
+
+.post-snippet {
+    padding: 0 15px 15px;
+    color: #AAB7C4;
+    font-size: 0.9em;
+}
+
+.view-all-btn {
+    margin-top: 50px;
+}
+
+/* --- Ejemplo de Estilo de Footer Básico --- */
+.site-footer {
+    background-color: #101820;
+    color: #AAB7C4;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 3px solid #4CAF50; /* Línea de acento */
+}

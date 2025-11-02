@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav th:fragment="main-menu" class="navbar">
+    <a th:href="@{/}" class="logo">KAPITAN KERNEL</a>
+    <div class="nav-links">
+        <a th:href="@{/blog}">Blog / Noticias</a>
+
+       <!-- <a th:href="@{/tienda}">Tienda Online</a> -->
+        <a th:href="@{/admin}">Panel de Administración</a>
+
+        <a th:href="@{/login}">Iniciar Sesión</a>
+    </div>
+</nav>
+</body>
+</html>

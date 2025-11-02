@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<footer th:fragment="site-footer" class="site-footer">
+    <div class="footer-container">
+        <div class="footer-info">
+            <h4>Kapitan Kernel</h4>
+            <p>Hardware a Medida y Noticias del Núcleo Informático.</p>
+        </div>
+        <div class="footer-links">
+            <a th:href="@{/}" class="footer-link">Inicio</a>
+            <a th:href="@{/blog}" class="footer-link">Blog</a>
+            <a th:href="@{/contacto}" class="footer-link">Contacto</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> Kapitan Kernel. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+</body>
+</html>
