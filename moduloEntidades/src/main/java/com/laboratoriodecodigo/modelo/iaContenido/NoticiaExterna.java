@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "noticias_externas")
@@ -55,5 +56,14 @@ public class NoticiaExterna {
 
     @Column(name = "id_ia_analisis_fk")
     private Long idIaAnalisisFk;
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "noticia_etiqueta", // Nombre de la tabla intermedia que Hibernate creará
+            joinColumns = @JoinColumn(name = "id_noticia_fk"), // Columna que se une a NoticiaExterna
+            inverseJoinColumns = @JoinColumn(name = "id_etiqueta_fk") // Columna que se une a Etiqueta
+    )
+    private Set<Etiqueta> etiquetas;
 
 }

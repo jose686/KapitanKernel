@@ -9,9 +9,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "mayoristas")
-@Getter // Para obtener los datos
-@Setter // Para que JPA pueda inicializar los campos
-@NoArgsConstructor // OBLIGATORIO para Hibernate
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Mayorista {
@@ -27,4 +27,5 @@ public class Mayorista {
     private String adapterClassName;
     @OneToMany(mappedBy = "mayorista", cascade = CascadeType.ALL)
     private List<GastoTienda> gastosAsociados = new ArrayList<>();
+
 }

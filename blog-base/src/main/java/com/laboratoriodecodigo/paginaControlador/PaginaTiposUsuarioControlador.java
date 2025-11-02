@@ -38,17 +38,6 @@ public class PaginaTiposUsuarioControlador {
         redirectAttributes.addFlashAttribute("mensaje", "Rol guardado con éxito.");
         return "redirect:/tipos-de-usuario";
     }
-/*
- * 
- @GetMapping("/tipos-de-usuario/editar/{id}")
- public String editarTipoDeUsuario(@PathVariable("id") Long id, Model model) {
-    List<TiposUsuario> tipos = tipoUsuarioServicios.listarTiposUsuario();
-    model.addAttribute("tipos", tipos);
-    TiposUsuario tipoAEditar = tipoUsuarioServicios.obtenerTipoUsuarioPorId(id);
-    model.addAttribute("nuevoTipo", tipoAEditar);
-    return "tipos-de-usuario";
-}
-*/
 
     @GetMapping("/tipos-de-usuario/eliminar/{id}")
     public String eliminarTipoDeUsuario(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {

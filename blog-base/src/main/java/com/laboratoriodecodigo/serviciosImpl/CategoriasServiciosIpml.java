@@ -50,4 +50,9 @@ public class CategoriasServiciosIpml implements CategoriasServicios {
     public List<Categorias> listarCategorias() {
         return categoriasRepository.findAll();
     }
+
+    @Override
+    public Categorias actualizarCategoria(Long id, Categorias categoriaActualizada) {
+        return null;
+    }
 }

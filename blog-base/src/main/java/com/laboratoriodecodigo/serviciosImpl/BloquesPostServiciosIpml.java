@@ -72,4 +72,15 @@ public class BloquesPostServiciosIpml implements BloquesPostServicios {
         return post.getBloquesDeContenido();
     }
 
+    @Override
+    public void eliminarBloque(Long idBloque) {
+        bloquesPostRepository.deleteById(idBloque);
+    }
+
+    @Override
+    public Optional<Bloques_Post> obtenerBloquePorId(Long idBloque) {
+        return bloquesPostRepository.findById(idBloque);
+    }
+
+
 }

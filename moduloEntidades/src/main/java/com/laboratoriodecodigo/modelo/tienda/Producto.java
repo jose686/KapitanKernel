@@ -9,9 +9,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "productos")
-@Getter // Para obtener los datos
-@Setter // Para que JPA pueda inicializar los campos
-@NoArgsConstructor // OBLIGATORIO para Hibernate
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Producto {
@@ -53,6 +53,7 @@ public class Producto {
     // RELACIÓN INVERSA (Historial de Ventas)
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<DetallePedido> historialVentas = new ArrayList<>();
+
 
 
 

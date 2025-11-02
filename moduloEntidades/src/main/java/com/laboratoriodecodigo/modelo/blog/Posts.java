@@ -6,12 +6,9 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Set;
-
-
-
 
 @Entity
 @Getter // Para obtener los datos
@@ -27,6 +24,10 @@ public class Posts {
     @ManyToOne
     private Usuario idAutor;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_imagen_destacada_fk", referencedColumnName = "idImagen")
+    private Imagenes imagenDestacada;
+    private String imagenDestacadaUrl;
 
     @ManyToMany
     @JoinTable(
@@ -34,18 +35,20 @@ public class Posts {
             joinColumns = @JoinColumn(name = "idPost"),
             inverseJoinColumns = @JoinColumn(name = "idCategoria"))
     private Set<Categorias> categorias;
+
     private String titulo;
     private String metaDescripcion;
+
     @Column(nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime fechaPublicacion;
+
     @Enumerated(EnumType.STRING)
     private PostStatus estado;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bloques_Post> bloquesDeContenido;
 
     @Column(name = "id_ia_generacion_fk")
     private Long idIaGeneracionFk;
-
-
 }

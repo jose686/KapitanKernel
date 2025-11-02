@@ -11,20 +11,22 @@ import java.util.Optional;
 public interface IProductoService {
 
     // 1. Cargar el catálogo completo o paginado
-    List<Producto> findAll();
+    List<Producto> buscarTodos();
 
     // 2. Buscar un producto por su ID de nuestra base de datos
-    Optional<Producto> findById(Long id);
+    Optional<Producto> buscarPorId(Long id);
 
     // 3. Buscar un producto por su SKU de mayorista (clave única)
-    Optional<Producto> findBySku(String skuMayorista);
+    Optional<Producto> buscarPorSku(String skuMayorista);
 
     // 4. Guardar un producto nuevo o actualizar uno existente
-    Producto save(Producto producto);
+    Producto guardar(Producto producto);
 
     // 5. Actualizar solo el precio y el stock (usado en la sincronización diaria con la API del mayorista)
-    void updatePriceAndStock(String skuMayorista, BigDecimal nuevoPrecio, Integer nuevoStock);
+    void actualizarPrecioYStock(String skuMayorista, BigDecimal nuevoPrecio, Integer nuevoStock);
 
     // 6. Eliminar un producto (posiblemente con la tabla Detalle asociada)
-    void deleteById(Long id);
+    void eliminarPorId(Long id);
+
+
 }

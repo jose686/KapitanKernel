@@ -100,8 +100,11 @@ public class ImagenesServiciosIpml implements ImagenesServicios {
         } catch (IOException e) {
 
         }
-
-
         imagenRepository.delete(imagen);
+    }
+
+    @Override
+    public Optional<Imagenes> obtenerImagenPorId(Long idImagenDestacada) {
+        return imagenRepository.findById(idImagenDestacada);
     }
 }

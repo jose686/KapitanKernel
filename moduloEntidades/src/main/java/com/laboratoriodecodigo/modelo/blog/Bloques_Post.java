@@ -25,6 +25,7 @@ public class Bloques_Post {
     @Enumerated(EnumType.STRING)
     private TipoBloque tipoBloque;
     private long orden;
+    @Column(name = "contenido", columnDefinition = "TEXT")
     private String contenido;
 
     @ManyToOne

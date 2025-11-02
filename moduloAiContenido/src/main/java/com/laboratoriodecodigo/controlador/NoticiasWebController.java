@@ -27,7 +27,7 @@ public class NoticiasWebController {
     // Endpoint: /api/v1/noticias/ultimas
     @GetMapping("/ultimas")
     public ResponseEntity<List<NoticiaExterna>> getUltimasNoticias(
-            @RequestParam(required = false, defaultValue = "10") int count,
+            @RequestParam(required = false, defaultValue = "25") int count,
             @RequestParam(required = false) String estado,
             @RequestParam(required = false) String idioma,
             @RequestParam(required = false) String q) { // 'q' para búsqueda de texto
@@ -79,19 +79,34 @@ public class NoticiasWebController {
         try {
             // Llama al servicio con el estado dinámico
             noticiasService.cambiarEstado(idNoticia, nuevoEstado);
-
-            // Si el frontend espera un redirect (ej. si usas AJAX y luego recargas)
             redirectAttributes.addFlashAttribute("success", "Noticia cambiada a estado " + nuevoEstado.name() + ".");
             return "redirect:/admin/noticias";
-
-            // 💡 Si usas el frontend con Fetch (AJAX) y solo quieres un 200 OK:
-            // return ResponseEntity.ok().build();
 
         } catch (Exception e) {
             // Manejo de errores
             redirectAttributes.addFlashAttribute("error", "Error al cambiar el estado: " + e.getMessage());
             return "redirect:/admin/noticias";
         }
+    }
+
+
+    @GetMapping("/etiqueta/{nombreEtiqueta}")
+    public ResponseEntity<List<NoticiaExterna>> obtenerNoticiasPorEtiqueta(
+            @PathVariable String nombreEtiqueta,
+            // ⭐ NUEVO: Recibir el estado como parámetro de consulta ⭐
+            @RequestParam(required = false) String estado) {
+
+        List<NoticiaExterna> noticias;
+
+        if (estado != null && !estado.isEmpty()) {
+            // Llama a un servicio que filtre por AMBOS
+            noticias = noticiasService.buscarPorEtiquetaYEstado(nombreEtiqueta, estado);
+        } else {
+            // Comportamiento actual: solo etiqueta
+            noticias = noticiasService.buscarPorEtiqueta(nombreEtiqueta);
+        }
+
+        return ResponseEntity.ok(noticias);
     }
 
 }

@@ -21,4 +21,6 @@ public interface CategoriasServicios {
     Categorias obtenerCategoriaPorNombre(String nombre);
 
     List<Categorias> listarCategorias();
+
+    Categorias actualizarCategoria(Long id, Categorias categoriaActualizada);
 }

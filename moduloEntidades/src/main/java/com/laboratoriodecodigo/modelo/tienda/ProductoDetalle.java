@@ -1,47 +1,46 @@
 package com.laboratoriodecodigo.modelo.tienda;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 
 @Entity
-@Table(name = "producto_detalle")
-@Getter // Para obtener los datos
-@Setter // Para que JPA pueda inicializar los campos
-@NoArgsConstructor // OBLIGATORIO para Hibernate
+@Table(name = "productos_detalle") // Puedes nombrar la tabla 'productos_detalle'
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductoDetalle {
+public class ProductoDetalle { // <-- ¡NOMBRE DE CLASE CORREGIDO!
 
+    // 1. Clave Primaria compartida con Producto (CRÍTICO para 1:1)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_producto_fk")
+    private Long idProductoFk;
 
-    // RELACIÓN OneToOne con Producto
-    // Este será la Clave Foránea (FK) y al mismo tiempo el ID de este detalle
-    // JoinColumn indica la columna en esta tabla que apunta a la tabla Producto
+    // 2. Contenido Enriquecido
+    @Lob // Permite almacenar grandes cantidades de texto
+    @Column(name = "descripcion_larga", nullable = false)
+    private String descripcionLarga;
+
+    @Column(name = "resumen_seo", length = 300)
+    private String resumenSeo;
+
+    @Lob
+    @Column(name = "contenido_marketing")
+    private String contenidoMarketing;
+
+    @Column(name = "ultima_modificacion_ia")
+    private LocalDateTime ultimaModificacionIA;
+
+    // 3. Relación Uno a Uno Inversa (Dueña de la Relación)
+    // ----------------------------------------------------------------------
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "producto_id", nullable = false)
+    @MapsId // ¡IMPORTANTE! Indica que el PK (idProductoFk) se mapea al FK
+    @JoinColumn(name = "id_producto_fk")
     private Producto producto;
-
-    // CAMPO RELLENO DE 500 PALABRAS (Descripción Larga para SEO)
-    @Lob // Para almacenar textos largos
-    @Column(name = "descripcion_larga_html", columnDefinition = "TEXT")
-    private String descripcionLargaHtml;
-
-    // Título optimizado para el navegador y Google
-    @Column(name = "metatitulo_seo", length = 100)
-    private String metatituloSeo;
-
-    // Puntos clave de venta (ej. lista de iconos)
-    @Lob
-    @Column(name = "puntos_clave_venta_json", columnDefinition = "TEXT")
-    private String puntosClaveVentaJson;
-
-    // La descripción técnica corta que viene del mayorista para complementar la tuya
-    @Lob
-    @Column(name = "descripcion_tecnica_mayorista", columnDefinition = "TEXT")
-    private String descripcionTecnicaMayorista;
-
 
 }

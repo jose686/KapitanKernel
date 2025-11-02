@@ -17,7 +17,7 @@ public interface NoticiaExternaRepositorio extends JpaRepository<NoticiaExterna,
     Optional<NoticiaExterna> findByIdNoticia(String idNoticia);
 
     List<NoticiaExterna> findAllBy(Pageable pageable);
-
+    List<NoticiaExterna> findByEtiquetas_Nombre(String nombreEtiqueta);
 
 
 
@@ -33,6 +33,13 @@ public interface NoticiaExternaRepositorio extends JpaRepository<NoticiaExterna,
                 @Param("idioma") String idioma,
                 @Param("q") String q);
 
+
+
+    List<NoticiaExterna> findByEtiquetas_NombreAndEstadoProcesamiento(
+            String nombreEtiqueta,
+            EstadoProcesamientoEnum estado
+    );
 }
+
 
 

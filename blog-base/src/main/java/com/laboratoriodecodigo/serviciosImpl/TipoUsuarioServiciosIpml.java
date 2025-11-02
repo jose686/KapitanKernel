@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TipoUsuarioServiciosIpml implements TipoUsuarioServicios {
@@ -52,15 +53,15 @@ public class TipoUsuarioServiciosIpml implements TipoUsuarioServicios {
     }
 
     @Override
-    public List<TiposUsuario> listarTiposUsuario() {
-        return tiposUsuarioRepository.findAll();
+    public TiposUsuario obtenerTipoUsuarioPorId(long id) {
+        return tiposUsuarioRepository.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Tipo de usuario no encontrado"));
     }
 
 
-
-    public TiposUsuario obtenerTipoUsuarioPorId(Long id) {
-        return tiposUsuarioRepository.findById(id)
-        .orElseThrow(() -> new RecursoNoEncontradoException("Tipo de usuario no encontrado"));
+    @Override
+    public List<TiposUsuario> listarTiposUsuario() {
+        return tiposUsuarioRepository.findAll();
     }
 
 
