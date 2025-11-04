@@ -1,189 +1,213 @@
 /* =======================================================
-   ESTILOS ESPECÍFICOS DE LA PÁGINA PRINCIPAL (Kapitan Kernel)
+   ESTILOS BASE Y LAYOUT (RESOLUCIÓN DEL PROBLEMA DE CENTRADO)
    ======================================================= */
 
-/* --- Estilos Generales y Layout --- */
-
-/* Añadir o modificar este bloque */
+/* 1. Reset Básico y Estética Global */
 body {
-    background-color: #101820; /* Gris muy oscuro, casi negro. Ideal para temas de hardware. */
+    background-color: #101820; /* Gris muy oscuro, casi negro */
     color: #E8F0F2; /* Color de texto base claro */
-    font-family: Arial, sans-serif; /* Si no lo tienes definido en base.css */
+    font-family: Arial, sans-serif;
+    margin: 0; /* IMPEDIR MARGENES DEL NAVEGADOR */
+    padding: 0;
 }
-
-.landing-content {
-    max-width: 1200px; /* Ancho máximo del contenido central */
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* --- SECCIÓN HERO (La parte más importante) --- */
-.hero-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 100px 0;
-    margin-bottom: 50px;
-    background: linear-gradient(180deg, rgba(10, 25, 41, 0.9), rgba(10, 25, 41, 0.5)), url('../images/hardware_background.jpg') center center no-repeat;
-    background-size: cover;
-    color: #E8F0F2; /* Texto claro */
-    border-radius: 8px;
-}
-
-.hero-title {
-    font-size: 3.5em;
-    font-weight: 800;
-    letter-spacing: 2px;
-    color: #4CAF50; /* Color de acento verde tecnológico */
-    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-    margin-bottom: 10px;
-}
-
-.hero-subtitle {
-    font-size: 1.8em;
-    font-weight: 300;
-    margin-bottom: 30px;
-}
-
-.hero-description {
-    font-size: 1.1em;
-    max-width: 700px;
-    line-height: 1.6;
-    margin-bottom: 40px;
-}
-
-/* --- Botones --- */
-.hero-actions .btn {
-    display: inline-block;
-    padding: 15px 30px;
-    margin: 0 10px;
+a {
+    color: #4CAF50; /* Enlaces por defecto verdes */
     text-decoration: none;
-    border-radius: 5px;
-    font-weight: 600;
-    transition: background-color 0.3s, transform 0.2s;
+}
+a:hover {
+    text-decoration: underline;
+}
+.block-image-container {
+    /* CLAVE: Reducir el ancho máximo del contenedor de la imagen de bloque */
+    max-width: 70%; /* Por ejemplo, limitar al 70% del ancho del artículo (900px * 0.7 = 630px) */
+    margin: 20px auto; /* Centrar y añadir margen */
+    display: block; /* Asegurar que se centra correctamente */
 }
 
-.btn-primary {
-    background-color: #4CAF50; /* Verde de acento */
-    color: #101820; /* Texto oscuro */
-    border: 2px solid #4CAF50;
-}
-
-.btn-primary:hover {
-    background-color: #5fb962;
-    transform: translateY(-2px);
-}
-
-
-.btn-secondary {
-    /* Mantenemos el color del texto y el borde claro */
-    background-color: rgba(232, 240, 242, 0.1); /* Antes era transparente, ahora tiene un fondo muy sutil */
-    color: #E8F0F2;
-    border: 2px solid #E8F0F2;
-}
-
-.btn-secondary:hover {
-    background-color: rgba(232, 240, 242, 0.2); /* Un poco más oscuro al pasar el ratón */
-}
-
-.disabled-link {
-    opacity: 0.5;
-    cursor: not-allowed;
-    pointer-events: none;
+.block-image {
+    width: 100%; /* La imagen ocupa el 100% de su contenedor (el 70% del artículo) */
+    height: auto; /* Mantiene la proporción */
+    display: block;
+    border-radius: 4px;
 }
 
 
-/* --- SECCIÓN DE VALOR (Tarjetas) --- */
-/* Ajustar la sección de valor */
-.value-section {
-    padding: 50px 0;
+.image-caption {
+    font-size: 0.9em;
+    color: #AAB7C4;
     text-align: center;
-    /* Remover cualquier background-color que pudiera ser blanco */
-}
-.card-grid {
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
-.value-card {
-    flex: 1;
-    background-color: #182736; /* Fondo de tarjeta oscuro */
-    padding: 30px;
-    border-radius: 8px;
-    border-left: 5px solid #4CAF50;
-    text-align: left;
+/* 2. CLASE CONTENEDORA GENÉRICA (SOLUCIÓN DEL LAYOUT) */
+.content-container {
+    max-width: 1200px; /* Ancho máximo para el contenido de lista/archivo */
+    margin: 50px auto; /* Centrar y añadir margen superior/inferior */
+    padding: 0 20px;   /* Evitar que el contenido se pegue a los bordes laterales */
 }
 
-.value-card h4 {
-    color: #E8F0F2;
-    font-size: 1.4em;
+/* 3. Estilos Específicos para Detalle del Post (Lectura) */
+.post-detail-content .content-container {
+    max-width: 900px; /* Reducir el ancho para mejor lectura de artículos */
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* =======================================================
+   ESTILOS DE LA PÁGINA DE ARCHIVO/LISTADO
+   ======================================================= */
+
+/* 4. Cabecera y Búsqueda */
+.page-header {
+    text-align: center;
+    padding: 40px 0 20px;
+}
+.page-title, .article-title {
+    color: #4CAF50; /* Títulos verdes */
+    font-size: 2.5em;
+    font-weight: bold;
     margin-bottom: 10px;
 }
-
-.value-card p {
+.subtitle {
     color: #AAB7C4;
 }
-
-/* --- SECCIÓN DE ÚLTIMOS BLOGS --- */
-.latest-blog-section {
-    padding: 50px 0 100px;
-    text-align: center;
-}
-
-.latest-blog-section h3 {
-    font-size: 2em;
+.filters-section {
     margin-bottom: 40px;
 }
-
-.post-preview-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+.search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #182736;
+    background-color: #0A1929;
+    color: #E8F0F2;
+    border-radius: 4px;
 }
 
+/* 5. Grid y Tarjetas */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
 .post-card {
     background-color: #182736;
     border-radius: 8px;
     overflow: hidden;
-    text-align: left;
     transition: transform 0.3s, box-shadow 0.3s;
 }
-
 .post-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.4); /* Sombra de acento verde */
 }
 
-.post-card img {
+/* 6. Contenido de la Tarjeta */
+.post-link {
+    display: block;
+    color: inherit;
+}
+.post-thumbnail {
+    height: 200px;
+    overflow: hidden;
+}
+.post-image {
     width: 100%;
-    height: 180px;
+    height: 100%;
     object-fit: cover;
 }
-
-.post-card h4 {
+.post-thumbnail-placeholder {
+    height: 200px;
+    background-color: #182736;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.placeholder-text {
+    color: #AAB7C4;
+}
+.post-content-summary {
     padding: 15px;
-    font-size: 1.2em;
-    color: #4CAF50;
+}
+.post-title-summary {
+    font-size: 1.5em;
+    color: #E8F0F2;
+    margin-bottom: 10px;
+}
+.snippet {
+    color: #AAB7C4;
+    font-size: 0.95em;
+    margin-bottom: 15px;
+}
+.post-meta {
+    font-size: 0.8em;
+    color: #4CAF50; /* Metadatos */
+}
+.post-author-wrapper {
+    margin-left: 15px;
 }
 
-.post-snippet {
-    padding: 0 15px 15px;
+/* =======================================================
+   ESTILOS DE LA PÁGINA DE DETALLE (post_detalle.html)
+   ======================================================= */
+
+.post-header {
+    margin-bottom: 30px;
+}
+.post-meta-detail {
     color: #AAB7C4;
     font-size: 0.9em;
+    margin-bottom: 20px;
 }
-
-.view-all-btn {
-    margin-top: 50px;
-}
-
-/* --- Ejemplo de Estilo de Footer Básico --- */
-.site-footer {
-    background-color: #101820;
+.meta-description-snippet {
+    font-style: italic;
     color: #AAB7C4;
-    padding: 20px 0;
-    text-align: center;
-    border-top: 3px solid #4CAF50; /* Línea de acento */
+    margin-bottom: 30px;
+}
+
+/* Contenido Principal (Bloques) */
+.featured-image-container {
+    margin-bottom: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.featured-image {
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* Ya tienes un límite de altura aquí */
+}
+.post-content-body {
+    line-height: 1.8;
+    color: #E8F0F2;
+}
+.content-block {
+    margin-bottom: 25px;
+}
+.content-paragraph {
+    /* Si estás usando th:utext, este es el estilo de los párrafos generados */
+    margin-bottom: 1em; 
+}
+.post-content-body h2 {
+    color: #4CAF50;
+    font-size: 1.8em;
+    margin: 30px 0 15px;
+}
+
+/* Footer del Post y Etiquetas */
+.post-footer {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #182736;
+}
+.post-tags .tags-label {
+    font-weight: bold;
+}
+.tag {
+    display: inline-block;
+    background-color: #182736;
+    color: #E8F0F2;
+    padding: 5px 10px;
+    margin-right: 8px;
+    border-radius: 4px;
+}
+.tag-link {
+    color: inherit;
 }

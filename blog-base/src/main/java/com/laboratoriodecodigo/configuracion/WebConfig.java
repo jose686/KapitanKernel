@@ -26,7 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:blog-base/src/main/resources/static/uploads/");
+                .addResourceLocations("classpath:/static/uploads/");
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/", "classpath:/templates/");
     }

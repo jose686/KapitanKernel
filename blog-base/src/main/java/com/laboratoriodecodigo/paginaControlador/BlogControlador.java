@@ -1,5 +1,6 @@
 package com.laboratoriodecodigo.paginaControlador;
 
+import com.laboratoriodecodigo.modelo.blog.PostStatus;
 import org.springframework.ui.Model;
 import com.laboratoriodecodigo.modelo.blog.Posts;
 import com.laboratoriodecodigo.servicios.PostsServicios;
@@ -20,13 +21,16 @@ public class BlogControlador {
         this.postServicio = postServicio;
     }
 
-
+    // En BlogControlador.java
     @GetMapping("/blog")
     public String listarPosts(Model model) {
 
-        List<Posts> posts = postServicio.listarPosts();
-        model.addAttribute("posts", posts);
-
+        List<Posts> postsPublicados = postServicio.listarPostsPorEstado(PostStatus.PUBLICADO);
+        model.addAttribute("posts", postsPublicados);
+        model.addAttribute("debugImageUrl", "/uploads/bloke.png");
         return "listadoPosts";
     }
+
+
 }
+

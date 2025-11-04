@@ -43,18 +43,35 @@ public class PaginaBloquesControlador {
         System.out.println("Entrando al controlador para el idPost: " + idPost);
 
         try {
+            // 1. OBTENER POST CON FETCH JOIN:
+            // Esta llamada (obtenerPostPorId) trae el Post, su colección de Bloques, y la Imagen de cada Bloque.
             Posts post = postsServicios.obtenerPostPorId(idPost)
                     .orElseThrow(() -> new RecursoNoEncontradoException("Post no encontrado."));
 
-            List<Bloques_Post> bloques = bloquesPostServicios.listarBloquesDePost(idPost);
+            // 2. ⭐ CORRECCIÓN CLAVE: Usar la colección de bloques ya cargada.
+            // Asumo que la relación en la entidad Posts es getBloquesDeContenido()
+            // y que devuelve un List o Set que se puede convertir a List.
+            List<Bloques_Post> bloques = new java.util.ArrayList<>(post.getBloquesDeContenido());
+
             Bloques_Post nuevoBloque = new Bloques_Post();
+            // Inicializamos la imagen para evitar NullPointerException al construir el formulario,
+            // asumiendo que el constructor de Imagenes está en el paquete correcto.
             nuevoBloque.setImagen(com.laboratoriodecodigo.modelo.blog.Imagenes.builder().build());
-            System.out.println("Bloques recuperados: " + bloques.size());
+
+            System.out.println("Bloques recuperados (del post cargado): " + bloques.size());
+
+            // ⭐ DEBUG FINAL PARA VER LA RUTA ⭐
+            if (!bloques.isEmpty() && bloques.get(0).getImagen() != null) {
+                System.out.println("DEBUG RUTA IMAGEN BLOQUE 1: " + bloques.get(0).getImagen().getRuta());
+            } else {
+                System.out.println("DEBUG RUTA IMAGEN BLOQUE 1: NULL o Bloques vacíos.");
+            }
+
 
             model.addAttribute("bloques", bloques);
             model.addAttribute("post", post);
             model.addAttribute("idPost", idPost);
-            model.addAttribute("nuevoBloque", nuevoBloque); // Usamos el objeto inicializado
+            model.addAttribute("nuevoBloque", nuevoBloque);
 
 
             return "bloquesPost";

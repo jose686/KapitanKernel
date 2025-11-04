@@ -28,7 +28,7 @@ public class Bloques_Post {
     @Column(name = "contenido", columnDefinition = "TEXT")
     private String contenido;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idImagen")
     private Imagenes imagen;
 

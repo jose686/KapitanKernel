@@ -32,4 +32,6 @@ public interface EtiquetaService {
      * @return Lista de todas las etiquetas.
      */
     List<Etiqueta> obtenerTodas();
+
+    boolean existePorNombre(String nombre);
 }

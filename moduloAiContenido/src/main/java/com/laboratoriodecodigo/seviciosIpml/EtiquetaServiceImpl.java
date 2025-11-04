@@ -43,4 +43,9 @@ public class EtiquetaServiceImpl implements EtiquetaService {
     public List<Etiqueta> obtenerTodas() {
         return etiquetaRepository.findAll();
     }
+
+    @Override
+    public boolean existePorNombre(String nombre) {
+        return this.buscarPorNombre(nombre) != null;
+    }
 }

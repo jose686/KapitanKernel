@@ -13,6 +13,7 @@ import java.util.Set;
 import com.laboratoriodecodigo.controlador.RecursoNoEncontradoException;
 import com.laboratoriodecodigo.modelo.blog.Categorias;
 import com.laboratoriodecodigo.modelo.blog.Imagenes;
+import com.laboratoriodecodigo.modelo.blog.PostStatus;
 import com.laboratoriodecodigo.modelo.blog.Posts;
 import com.laboratoriodecodigo.modelo.usuarios.Usuario;
 import com.laboratoriodecodigo.repositorio.PostsRepository;
@@ -68,8 +69,10 @@ public class PostsServiciosIpml implements PostsServicios {
             if (!imagenOptional.isPresent()) {
                 throw new RecursoNoEncontradoException("Imagen con ID " + idImagenDestacada + " no encontrada.");
             }
-            // Asignar el objeto Imagenes al Post
+            // Asignar el objeto Imagenes al Post. Funciona bien con ManyToOne.
             posts.setImagenDestacada(imagenOptional.get());
+            // No es estrictamente necesario, pero podemos limpiar el campo de URL si existe el objeto Imagenes
+            posts.setImagenDestacadaUrl(null);
         }
 
         // 4. Asignar el resto de las dependencias
@@ -79,10 +82,6 @@ public class PostsServiciosIpml implements PostsServicios {
         // 5. Guardar el Post (Hibernate se encarga de la OneToOne)
         return postsRepository.save(posts);
     }
-// En com.laboratoriodecodigo.serviciosImpl.PostsServiciosIpml.java
-
-// Asegúrate de inyectar el servicio de imágenes aquí
-// ...
 
     @Override
     public Posts actualizarPosts(
@@ -119,16 +118,17 @@ public class PostsServiciosIpml implements PostsServicios {
         postExistente.setCategorias(nuevasCategorias);
 
         // 5. ⭐ Actualizar Imagen Destacada ⭐
-        if (idImagenDestacada != null) {
+        if (idImagenDestacada != null && idImagenDestacada > 0) { // Mayor a 0 para IDs válidos
             Imagenes imagen = imagenesServicios.obtenerImagenPorId(idImagenDestacada)
                     .orElseThrow(() -> new RecursoNoEncontradoException("Imagen con ID " + idImagenDestacada + " no encontrada."));
-            postExistente.setImagenDestacada(imagen);
-        } else {
-            // Opción: Si el ID de imagen es nulo, puedes decidir si quieres borrar la imagen existente
-            postExistente.setImagenDestacada(null);
-        }
 
-        // 6. Guardar y devolver
+            postExistente.setImagenDestacada(imagen);
+            postExistente.setImagenDestacadaUrl(null); // Aseguramos que solo se use el objeto
+        } else {
+            // Si el ID es nulo (o 0), se borra la imagen destacada
+            postExistente.setImagenDestacada(null);
+
+        }
         return postsRepository.save(postExistente);
     }
 
@@ -150,6 +150,11 @@ public class PostsServiciosIpml implements PostsServicios {
     @Override
     public Optional<Posts> obtenerPostPorId(Long id) {
 
-        return postsRepository.findById(id);
+        return postsRepository.findByIdWithFullContent(id);
+    }
+
+    public List<Posts> listarPostsPorEstado(PostStatus estado) {
+
+        return postsRepository.findByEstado(estado);
     }
 }

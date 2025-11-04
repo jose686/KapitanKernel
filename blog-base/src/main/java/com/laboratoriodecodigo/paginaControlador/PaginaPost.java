@@ -54,6 +54,9 @@ public class PaginaPost {
         return "post";
     }
 
+    // En PaginaPost.java (Controller)
+
+
 
     @PostMapping("/posts/guardar")
     public String guardarPost(
@@ -93,7 +96,7 @@ public class PaginaPost {
         try {
 
             Optional<Posts> postOptional = postsServicios.obtenerPostPorId(idPost);
-
+            List<Imagenes> imagenesDisponibles = imagenesServicios.listarTodasLasImagenes();
             if (postOptional.isEmpty()) {
                 throw new RecursoNoEncontradoException("Post con ID " + idPost + " no encontrado.");
             }
@@ -103,7 +106,7 @@ public class PaginaPost {
             model.addAttribute("postAEditar", postAEditar);
             model.addAttribute("todasLasCategorias", todasLasCategorias);
             model.addAttribute("autoresDisponibles", autoresDisponibles);
-
+            model.addAttribute("imagenesDisponibles", imagenesDisponibles);
             return "editarPost";
 
         } catch (RecursoNoEncontradoException e) {

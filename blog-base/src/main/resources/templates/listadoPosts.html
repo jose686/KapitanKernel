@@ -3,69 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>Archivo del Blog | Kapitan Kernel</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
     <link rel="stylesheet" th:href="@{/css/public.css}">
-
     <meta name="description" content="Explora el archivo completo de Kapitan Kernel: guías de montaje, reviews de componentes y trucos de optimización de hardware."/>
 </head>
 <body>
 
 <div th:insert="~{layout/menu :: main-menu}"></div>
 
-<main class="blog-archive-content">
+<main class="blog-archive-content content-container">
 
-    <header class="page-header" style="text-align: center; padding: 40px 0;">
-        <h1 style="color: #4CAF50;">Archivo del Núcleo</h1>
+    <header class="page-header">
+        <h1 class="page-title">Archivo del Núcleo</h1>
         <p class="subtitle">Todo el conocimiento de hardware de Kapitan Kernel, organizado por fecha.</p>
     </header>
 
-    <section class="filters-section" style="margin-bottom: 40px;">
-        <input type="text" placeholder="Buscar artículos por título o componente..." class="search-input" style="width: 100%; padding: 10px; border: 1px solid #182736; background-color: #0A1929; color: #E8F0F2; border-radius: 4px;" />
+    <section class="filters-section">
+        <input type="text" placeholder="Buscar artículos por título o componente..." class="search-input" />
     </section>
 
-    <section class="posts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;">
+    <section class="posts-grid">
 
         <div th:each="post : ${posts}" class="post-card large-card">
 
-            <a th:href="@{/blog/{id}(id=${post.idTipo})}" class="post-link" style="text-decoration: none; display: block;">
+            <a th:href="@{/blog/{id}(id=${post.idTipo})}" class="post-link">
 
-                <div th:if="${post.imagenDestacada}" class="post-thumbnail" style="height: 200px; overflow: hidden;">
-                    <img th:src="@{${post.imagenDestacada.ruta}}"
-                         th:alt="${post.imagenDestacada.altText}"
-                         style="width: 100%; height: 100%; object-fit: cover;">
+                <div th:with="imgObj=${post.imagenDestacada},
+                               imgUrl=${post.imagenDestacadaUrl ?: (#strings.isEmpty(imgObj) ? null : imgObj.ruta)}">
+
+                    <div class="post-thumbnail">
+
+                        <img th:if="${imgUrl != null and imgUrl != ''}"
+                             th:src="@{${imgUrl}}"
+                             th:alt="${post.titulo}"
+                             class="post-image">
+
+                        <div th:unless="${imgUrl != null and imgUrl != ''}"
+                             class="post-thumbnail-placeholder">
+                            <span class="placeholder-text">[Imagen Pendiente]</span>
+                        </div>
+                    </div>
                 </div>
-                <div th:unless="${post.imagenDestacada}" class="post-thumbnail-placeholder" style="height: 200px; background-color: #182736; display: flex; align-items: center; justify-content: center;">
-                    <span style="color: #AAB7C4;">[Imagen Pendiente]</span>
-                </div>
-                <div class="post-content-summary" style="padding: 15px;">
-                    <h2 style="font-size: 1.5em; color: #E8F0F2; margin-bottom: 10px;">
+                <div class="post-content-summary">
+                    <h2 class="post-title-summary">
                         <span th:text="${post.titulo}">Título del Post de Hardware</span>
                     </h2>
 
-                    <p class="snippet" style="color: #AAB7C4; font-size: 0.95em; margin-bottom: 15px;">
+                    <p class="snippet">
                         <span th:text="${post.metaDescripcion}">Breve resumen del contenido del artículo.</span>
                     </p>
 
-                    <div class="post-meta" style="font-size: 0.8em; color: #4CAF50;">
+                    <div class="post-meta">
+                        <span>Publicado el:
+                            <span th:if="${post.fechaPublicacion != null}"
+                                  th:text="${#temporals.format(post.fechaPublicacion, 'dd MMMM yyyy')}">01/01/2025</span>
+                            <span th:unless="${post.fechaPublicacion != null}">Fecha Desconocida</span>
+                        </span>
 
-                    <span>Publicado el:
-                        <span th:if="${post.fechaPublicacion != null}"
-                              th:text="${#temporals.format(post.fechaPublicacion, 'dd MMMM yyyy')}">01/01/2025</span>
-                        <span th:unless="${post.fechaPublicacion != null}">Fecha Desconocida</span>
-                    </span>
-
-                        <span th:if="${post.idAutor != null}" style="margin-left: 15px;">
-                        Por: <span th:text="${post.idAutor.nombreUsuario}">Kapitan</span>
-                    </span>
-                        <span th:unless="${post.idAutor != null}">Por: Sistema</span>
-
+                        <span th:if="${post.idAutor != null}" class="post-author">
+                            Por: <span th:text="${post.idAutor.nombreUsuario}">Kapitan</span>
+                        </span>
+                        <span th:unless="${post.idAutor != null}" class="post-author">Por: Sistema</span>
                     </div>
                 </div>
             </a>
-
         </div>
-
-        <div th:if="${#lists.isEmpty(posts)}" class="alert warning" style="/* ... */">
+        <div th:if="${#lists.isEmpty(posts)}" class="alert warning">
             <p>Aún no hay artículos publicados en esta sección.</p>
         </div>
 

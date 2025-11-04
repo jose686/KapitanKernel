@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Editar Post | Administración</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
 </head>
 <body>
 
@@ -25,6 +25,11 @@
                   class="standard-form">
 
                 <input type="hidden" name="_method" value="PUT" />
+
+                <input type="hidden" name="idImagenDestacada"
+                       th:value="${postAEditar.imagenDestacada != null ? postAEditar.imagenDestacada.idImagen : ''}" />
+
+                <input type="hidden" th:field="*{imagenDestacadaUrl}" />
 
                 <label for="titulo">Título de la Entrada:</label>
                 <input type="text" id="titulo" th:field="*{titulo}" required>

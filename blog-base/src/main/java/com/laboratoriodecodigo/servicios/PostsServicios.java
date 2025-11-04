@@ -3,6 +3,7 @@ package com.laboratoriodecodigo.servicios;
 
 
 
+import com.laboratoriodecodigo.modelo.blog.PostStatus;
 import com.laboratoriodecodigo.modelo.blog.Posts;
 
 import java.util.List;
@@ -25,4 +26,5 @@ public interface PostsServicios {
 
     Optional<Posts> obtenerPostPorId(Long idPost);
 
+    List<Posts> listarPostsPorEstado(PostStatus postStatus);
 }

@@ -24,7 +24,7 @@ public class Posts {
     @ManyToOne
     private Usuario idAutor;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne // ⬅️ ¡CAMBIO FUNDAMENTAL!
     @JoinColumn(name = "id_imagen_destacada_fk", referencedColumnName = "idImagen")
     private Imagenes imagenDestacada;
     private String imagenDestacadaUrl;

@@ -41,7 +41,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                     // Permite el acceso anónimo a la API y la vista de login web
                     .requestMatchers("/api/auth/**", "/login").permitAll()
-                    .requestMatchers("/", "/blog/**", "/css/**", "/js/**", "/images/**").permitAll()
+                    .requestMatchers("/", "/blog/**", "/css/**", "/js/**", "/images/**","/uploads/**").permitAll()
                     .anyRequest().authenticated()
             ).exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint(unauthorizedHandler)

@@ -1,21 +1,94 @@
+<!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${post.titulo}"></title>
+    <meta charset="UTF-8">
+    <title th:text="${post.titulo} + ' | Kapitan Kernel'"></title>
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/public.css}">
+    <meta name="description" th:content="${post.metaDescripcion}"/>
 </head>
 <body>
 
-<h1 th:text="${post.titulo}"></h1>
-<p>Publicado el: <span th:text="${#temporals.format(post.fechaPublicacion, 'dd MMMM yyyy')}"></span></p>
+<div th:insert="~{layout/menu :: main-menu}"></div>
 
-<div th:if="${post.imagenDestacada}">
-    <img th:src="@{${post.imagenDestacada.ruta}}" th:alt="${post.imagenDestacada.altText}">
-</div>
+<main class="post-detail-content">
+    <div class="content-container">
+        <article class="post-article">
 
-<div class="post-content">
-    <div th:each="bloque : ${post.bloquesDeContenido}">
-        <p th:text="${bloque.contenido}"></p>
+            <header class="post-header">
+                <h1 th:text="${post.titulo}" class="article-title">Título del Artículo</h1>
+
+                <div class="post-meta-detail">
+                <span>
+                    Publicado el:
+                    <span th:text="${#temporals.format(post.fechaPublicacion, 'dd MMMM yyyy')}">01 Enero 2025</span>
+                </span>
+                    <span class="post-author-wrapper">
+                    Por:
+                    <span th:if="${post.idAutor != null}" th:text="${post.idAutor.nombreUsuario}">Kapitan</span>
+                    <span th:unless="${post.idAutor != null}">Sistema</span>
+                </span>
+                </div>
+
+                <p class="meta-description-snippet">
+                    <span th:text="${post.metaDescripcion}">Breve resumen/introducción del contenido.</span>
+                </p>
+            </header>
+
+            <div th:with="imgObj=${post.imagenDestacada} ?: null,
+                      imgUrl=${post.imagenDestacadaUrl ?: (imgObj != null ? imgObj.ruta : null)}">
+
+                <figure class="featured-image-container" th:if="${imgUrl != null and imgUrl != ''}">
+                    <img th:src="@{${imgUrl}}"
+                         th:alt="${post.titulo}"
+                         class="featured-image">
+                </figure>
+
+            </div>
+            <section class="post-content-body">
+                <div th:each="bloque : ${post.bloquesDeContenido}"
+                     th:with="imagenObj=${bloque.imagen}"
+                     class="content-block">
+
+                    <div th:if="${imagenObj != null and imagenObj.ruta != null}">
+
+                        <figure class="block-image-container">
+                            <img th:src="@{${imagenObj.ruta}}"
+                                 th:alt="${imagenObj.altText ?: bloque.contenido}"
+                                 class="block-image"> <figcaption th:if="${bloque.contenido != null}" class="image-caption">
+                            <span th:utext="${bloque.contenido}">Pie de foto o descripción</span>
+                        </figcaption>
+                        </figure>
+                    </div>
+
+                    <div th:unless="${imagenObj != null and imagenObj.ruta != null}">
+                        <p th:utext="${bloque.contenido}"
+                           th:classappend="${bloque.tipoBloque.name() == 'ENCABEZADO' ? 'content-heading' : 'content-paragraph'}">
+                            Contenido o Encabezado
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
+            <footer class="post-footer">
+                <div th:if="${!post.categorias.isEmpty()}" class="post-tags">
+                    <span class="tags-label">Etiquetas: </span>
+                    <span th:each="cat : ${post.categorias}" class="tag">
+                    <a th:href="@{/categoria/{id}(id=${cat.idCategoria})}"
+                       th:text="${cat.nombreCategoria}"
+                       class="tag-link">
+                       Categoría
+                    </a>
+                </span>
+                </div>
+            </footer>
+
+        </article>
     </div>
-</div>
+</main>
+
+<div th:insert="~{layout/footer :: site-footer}"></div>
 
 </body>
 </html>
