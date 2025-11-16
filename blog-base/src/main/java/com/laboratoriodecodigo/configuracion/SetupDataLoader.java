@@ -47,14 +47,14 @@ public class SetupDataLoader implements CommandLineRunner {
 
     private void crearUsuarioAdminSiNoExiste() {
         final String ADMIN_USERNAME = "admin@kapitankernel.com";
-        final String ADMIN_PASSWORD = "PasswordSeguro123!";
+        final String ADMIN_PASSWORD = "1234";
         TiposUsuario adminTipo = tipoUsuarioServicios.obtenerTipoUsuarioPorNombre("ADMIN");
         Long ADMIN_TIPO_ID = adminTipo.getIdTipo();
 
         if (usuarioServicios.obtenerUsuarioPorCorreo(ADMIN_USERNAME).isEmpty()) {
 
             Usuario admin = new Usuario();
-            admin.setNombreUsuario("Administrador Principal");
+            admin.setNombreUsuario("Admin");
             admin.setCorreo(ADMIN_USERNAME);
             admin.setContrasena_hash(ADMIN_PASSWORD);
 

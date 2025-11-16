@@ -37,4 +37,6 @@ public interface BusquedaPredefinidaService {
      * @param busqueda La entidad a actualizar.
      */
     void actualizarUltimaEjecucion(BusquedaPredefinida busqueda);
+
+    void eliminarBusqueda(Long idBusqueda);
 }

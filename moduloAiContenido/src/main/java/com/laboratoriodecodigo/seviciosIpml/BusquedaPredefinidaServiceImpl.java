@@ -51,4 +51,9 @@ public class BusquedaPredefinidaServiceImpl implements BusquedaPredefinidaServic
         busqueda.setUltimaEjecucion(LocalDateTime.now());
         busquedaRepository.save(busqueda);
     }
+
+    @Override
+    public void eliminarBusqueda(Long idBusqueda) {
+        busquedaRepository.deleteById(idBusqueda);
+    }
 }

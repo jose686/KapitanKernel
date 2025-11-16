@@ -27,6 +27,10 @@ public class SincronizacionScheduler {
     public void sincronizarNoticiasMasivamente() {
         System.out.println("🤖 CRON JOB: Iniciando proceso de sincronización masiva a las: " + LocalDateTime.now());
         List<BusquedaPredefinida> busquedasActivas = busquedaService.obtenerBusquedasActivas();
+
+        // ⭐ El retraso total será: 5 segundos * número de búsquedas (aprox. 30 segundos)
+        final long RETRASO_MS = 5000;
+
         for (BusquedaPredefinida busqueda : busquedasActivas) {
 
             try {
@@ -44,6 +48,16 @@ public class SincronizacionScheduler {
             } catch (Exception e) {
                 System.err.printf("CRON JOB: Error al ejecutar la búsqueda '%s': %s\n",
                         busqueda.getPalabrasClave(), e.getMessage());
+            }
+
+            // ⭐ IMPLEMENTACIÓN DEL RETRASO ⭐
+            try {
+                System.out.println("Esperando " + (RETRASO_MS / 1000) + " segundos...");
+                Thread.sleep(RETRASO_MS);
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+                System.err.println("Hilo de sincronización interrumpido.");
+                return; // Salir del método
             }
         }
         System.out.println("🤖 CRON JOB: Finalizado.");

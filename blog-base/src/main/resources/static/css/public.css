@@ -211,3 +211,82 @@ a:hover {
 .tag-link {
     color: inherit;
 }
+
+
+
+/* =======================================================
+   ESTILOS ESPECÍFICOS PARA LA PÁGINA DE LOGIN
+   ======================================================= */
+
+/* 1. Cuerpo del Login */
+.login-body {
+    /* Usar Flexbox para centrar perfectamente el contenedor en la pantalla */
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    min-height: 100vh; /* Asegura que ocupe toda la altura de la vista */
+    background-color: #0A1929; /* Fondo un poco más oscuro que el cuerpo base */
+}
+
+/* 2. Contenedor Principal del Formulario */
+.login-container {
+    background-color: #182736; /* Color de tarjeta/fondo de formulario */
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Sombra suave para destacar */
+    width: 100%;
+    max-width: 400px; /* Ancho fijo para que no se extienda demasiado */
+    text-align: center;
+}
+
+.login-container h1 {
+    color: #4CAF50; /* Color de acento de Kapitan Kernel */
+    margin-bottom: 30px;
+    font-size: 1.8em;
+}
+
+/* 3. Estilos del Formulario */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaciado entre elementos */
+}
+
+.login-form label {
+    text-align: left;
+    color: #E8F0F2;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    padding: 12px;
+    border: 1px solid #0A1929;
+    background-color: #0A1929; /* Fondo oscuro para los campos */
+    color: #E8F0F2;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+.login-form input:focus {
+    border-color: #4CAF50; /* Borde verde al enfocar */
+    outline: none;
+}
+
+/* 4. Estilo del Botón */
+.login-form .btn-primary {
+    background-color: #4CAF50; /* Verde principal */
+    color: #101820; /* Texto oscuro para contraste */
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.login-form .btn-primary:hover {
+    background-color: #66BB6A; /* Verde más claro al pasar el ratón */
+}

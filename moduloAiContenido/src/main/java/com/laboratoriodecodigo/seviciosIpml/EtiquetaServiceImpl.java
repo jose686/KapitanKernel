@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.text.Normalizer;
+import java.util.Locale;
 
 @Service
 public class EtiquetaServiceImpl implements EtiquetaService {
@@ -21,12 +23,35 @@ public class EtiquetaServiceImpl implements EtiquetaService {
 
     @Override
     public Etiqueta guardarEtiqueta(Etiqueta etiqueta) {
-        // Lógica de negocio: asegura que el slug se genera correctamente si no existe
+        // ⭐ Lógica de negocio para generar el slug si falta ⭐
         if (etiqueta.getSlug() == null || etiqueta.getSlug().isEmpty()) {
-            // Implementar lógica de generación de slug aquí
-            // Ejemplo: etiqueta.setSlug(generarSlug(etiqueta.getNombre()));
+            // Generar el slug a partir del nombre antes de guardar
+            String slugGenerado = generarSlug(etiqueta.getNombre());
+            etiqueta.setSlug(slugGenerado);
         }
         return etiquetaRepository.save(etiqueta);
+    }
+
+    private String generarSlug(String input) {
+        if (input == null) {
+            return "";
+        }
+
+        // 1. Convertir a minúsculas
+        String slug = input.toLowerCase(Locale.ROOT);
+
+        // 2. Normalizar a NFD y quitar caracteres diacríticos (acentos)
+        slug = Normalizer.normalize(slug, Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+
+        // 3. Reemplazar caracteres no alfanuméricos (ni guiones) por guiones
+        slug = slug.replaceAll("[^a-z0-9\\s-]", "");
+
+        // 4. Reemplazar espacios y guiones múltiples por un solo guión
+        slug = slug.trim()
+                .replaceAll("[\\s-]+", "-");
+
+        return slug;
     }
 
     @Override
@@ -47,5 +72,10 @@ public class EtiquetaServiceImpl implements EtiquetaService {
     @Override
     public boolean existePorNombre(String nombre) {
         return this.buscarPorNombre(nombre) != null;
+    }
+
+    @Override
+    public void eliminarEtiqueta(Long idEtiqueta) {
+        etiquetaRepository.deleteById(idEtiqueta);
     }
 }

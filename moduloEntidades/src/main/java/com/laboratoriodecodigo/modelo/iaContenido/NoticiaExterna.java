@@ -58,7 +58,7 @@ public class NoticiaExterna {
     private Long idIaAnalisisFk;
 
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "noticia_etiqueta", // Nombre de la tabla intermedia que Hibernate creará
             joinColumns = @JoinColumn(name = "id_noticia_fk"), // Columna que se une a NoticiaExterna

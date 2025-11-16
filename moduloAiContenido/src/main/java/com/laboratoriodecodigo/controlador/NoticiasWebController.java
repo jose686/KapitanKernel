@@ -30,10 +30,8 @@ public class NoticiasWebController {
             @RequestParam(required = false, defaultValue = "25") int count,
             @RequestParam(required = false) String estado,
             @RequestParam(required = false) String idioma,
-            @RequestParam(required = false) String q) { // 'q' para búsqueda de texto
-
-        // Llama al servicio con todos los filtros.
-        // El servicio se encarga de aplicar solo los filtros que no son null.
+            @RequestParam(required = false) String q,
+            @RequestParam(required = false) String etiqueta) {
         List<NoticiaExterna> noticias = noticiasService.findLatestFiltered(count, estado, idioma, q);
 
         if (noticias.isEmpty()) {

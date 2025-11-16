@@ -34,4 +34,6 @@ public interface EtiquetaService {
     List<Etiqueta> obtenerTodas();
 
     boolean existePorNombre(String nombre);
+
+    void eliminarEtiqueta(Long idEtiqueta);
 }
