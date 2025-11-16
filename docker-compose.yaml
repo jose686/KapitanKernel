@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # 1. SERVICIO DE BACKEND (Tu aplicación Spring Boot)
+  backend:
+    container_name: kapitan_kernel_backend
+    # Indica a Compose que use el Dockerfile que ya creaste en el directorio actual
+    command: ["sh", "-c", "sleep 30 && java -Xmx1500m -jar /app/blog-base-0.0.1-SNAPSHOT.jar"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 2000m
+
+    # Mapeo de puertos para acceder a Spring Boot desde tu máquina
+    ports:
+      - "8080:8080"
+
+    # Establece la dependencia: el backend espera a que MySQL esté listo
+    depends_on:
+      - mysql
+
+    # VARIABLES DE ENTORNO: La clave para la conexión a la base de datos
+    environment:
+      # URL de conexión corregida. Usa el nombre del servicio 'mysql'
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/kapitan_kernel_db?serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: RDtB4puMoZQ$b!hPvx3poS
+      # Otras variables que necesites (ej: para tu módulo de seguridad o JWT)
+
+  # 2. SERVICIO DE BASE DE DATOS (MySQL)
+  mysql:
+    container_name: kapitan_kernel_mysql
+    # Usamos la imagen oficial de MySQL
+    image: mysql:8.0
+
+    # Mapeo de puertos (opcional, si quieres acceder a la DB desde fuera de Docker)
+    ports:
+      - "3307:3306"
+
+    # Reiniciar siempre para asegurar que la DB esté lista
+    restart: always
+
+    # Variables de entorno para configurar la base de datos
+    environment:
+      MYSQL_ROOT_PASSWORD: RDtB4puMoZQ$b!hPvx3poS
+      MYSQL_DATABASE: kapitan_kernel_db
+      MYSQL_USER: kapitan_user
+      MYSQL_PASSWORD: CN&2n2Hw4Xa7gWRiN3#AfR
+
+
+    # Almacenamiento persistente para los datos de la DB
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/mysql
+
+# 3. VOLÚMENES (Para persistir los datos de MySQL)
+volumes:
+  db_data:

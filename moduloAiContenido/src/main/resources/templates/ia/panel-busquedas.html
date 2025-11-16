@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administración de Búsquedas IA</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:insert="~{layout/menu :: main-menu}"></div>
+
+<div class="admin-layout">
+    <div th:insert="~{layout/admin_menu :: admin-sidebar}"></div>
+
+    <main class="admin-content">
+        <h1>Panel de Administración de Búsquedas IA 🤖</h1>
+        <hr>
+
+        <div th:if="${mensaje}" class="alert alert-success">
+            <p th:text="${mensaje}"></p>
+        </div>
+        <div th:if="${error}" class="alert alert-danger">
+            <p th:text="${error}"></p>
+        </div>
+
+        <div class="form-section">
+            <h2>Configurar Nueva Búsqueda Automática</h2>
+            <form th:action="@{/admin/ia/busquedas/guardar}" method="post" class="standard-form">
+
+                <div class="form-group">
+                    <label for="palabrasClave">Palabras Clave (Separadas por comas):</label>
+                    <input type="text" id="palabrasClave" name="palabrasClave" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="idEtiqueta">Etiqueta de Destino:</label>
+                    <select id="idEtiqueta" name="idEtiqueta" required>
+                        <option value="">-- Seleccione una Etiqueta --</option>
+                        <option th:each="etiqueta : ${etiquetas}"
+                                th:value="${etiqueta.idEtiqueta}"  th:text="${etiqueta.nombre}">
+                            Etiqueta Ejemplo
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="limiteNoticias">Límite de Noticias por Ejecución (Predeterminado: 10):</label>
+                    <input type="number" id="limiteNoticias" name="limiteNoticias" value="10">
+                </div>
+
+                <div class="form-group">
+                    <label for="frecuenciaMinutos">Frecuencia (Minutos) (Predeterminado: 60):</label>
+                    <input type="number" id="frecuenciaMinutos" name="frecuenciaMinutos" value="60">
+                </div>
+
+                <div class="form-group">
+                    <input type="checkbox" id="activa" name="activa" checked>
+                    <label for="activa">Búsqueda Activa</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar Configuración</button>
+            </form>
+        </div>
+
+        <hr>
+
+        <div class="action-section">
+            <h2>Acciones Manuales</h2>
+            <p>Puedes iniciar una sincronización manual de prueba para verificar que la conexión con la API de noticias funciona correctamente.</p>
+
+            <a th:href="@{/admin/noticias/sincronizar}" class="btn btn-secondary">
+                Iniciar Sincronización Manual (Query por defecto)
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="list-section">
+            <h2>Configuraciones Existentes</h2>
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Palabras Clave</th> <th>Etiqueta Destino</th>
+                    <th>Límite</th>
+                    <th>Frecuencia (Min)</th>
+                    <th>Activa</th>
+                    <th>Acción</th>
+                </tr>
+                </thead>
+                <tbody th:if="${not #lists.isEmpty(busquedas)}">
+                <tr th:each="busqueda : ${busquedas}">
+                    <td th:text="${busqueda.idBusqueda}">1</td>
+                    <td th:text="${busqueda.palabrasClave}">Ejemplo de Búsqueda</td> <td th:text="${busqueda.etiqueta.nombre}">Tecnología</td>
+                    <td th:text="${busqueda.limiteNoticias}">10</td>
+                    <td th:text="${busqueda.frecuenciaMinutos}">60</td>
+                    <td th:text="${busqueda.activa} ? 'Sí' : 'No'">Sí</td>
+
+                    <td>
+                        <a th:href="@{/admin/ia/busquedas/sincronizar/{id}(id=${busqueda.idBusqueda})}" class="btn btn-info">Sinc. Ahora</a>
+                        <a th:href="@{/admin/ia/busquedas/eliminar/{id}(id=${busqueda.idBusqueda})}"
+                           onclick="return confirm('¿Estás seguro de que quieres eliminar esta configuración de búsqueda?')"
+                           class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

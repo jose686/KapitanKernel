@@ -1,0 +1,178 @@
+/* =======================================================
+   ESTILOS ESPECÍFICOS DE LA PORTADA (LANDING PAGE)
+   ======================================================= */
+
+/* 1. Contenedor de la Landing */
+.landing-content.content-container {
+    padding: 0; /* Limpiamos el padding del content-container para que el HERO ocupe todo el ancho */
+    max-width: 100%; /* El contenedor del landing debe permitir al hero ocupar todo el ancho visible */
+}
+
+/* 2. SECCIÓN HERO (Banner de Portada) */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 100px 0;
+    margin-bottom: 50px;
+    background: linear-gradient(180deg, rgba(10, 25, 41, 0.9), rgba(10, 25, 41, 0.5)), url('../images/hardware_background.jpg') center center no-repeat;
+    background-size: cover;
+    color: #E8F0F2;
+    border-radius: 0; /* No queremos bordes redondeados en el banner */
+    width: 100%;
+}
+
+.hero-text-container {
+    max-width: 900px; /* Limita el ancho del texto dentro del hero */
+    padding: 0 20px; /* Asegura el padding interno para que no se pegue */
+}
+
+.hero-title {
+    font-size: 3.5em;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #4CAF50; /* Verde de acento tecnológico */
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    margin-bottom: 10px;
+}
+
+.hero-subtitle {
+    font-size: 1.8em;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.hero-description {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+/* 3. Estilos de Botones */
+.hero-actions .btn {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 0 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    color: #101820; /* Texto oscuro sobre fondo verde */
+    border: 2px solid #4CAF50;
+}
+.btn-secondary {
+    background-color: transparent;
+    color: #E8F0F2;
+    border: 2px solid #E8F0F2;
+}
+.btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* 4. SECCIÓN DE VALOR (Tarjetas) */
+.value-section {
+    padding: 50px 20px; /* Asegura el padding lateral, aunque esté dentro de main */
+    text-align: center;
+    max-width: 1200px; /* Ancho máximo para centrar el contenido de la sección */
+    margin: 0 auto;
+}
+.value-section h3 {
+    font-size: 2em;
+    margin-bottom: 40px;
+    color: #E8F0F2;
+}
+.card-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 30px;
+}
+.value-card {
+    flex: 1;
+    background-color: #182736;
+    padding: 30px;
+    border-radius: 8px;
+    border-left: 5px solid #4CAF50; /* Línea de acento verde */
+    text-align: left;
+}
+.value-card h4 {
+    color: #E8F0F2;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+/* 5. SECCIÓN DE ÚLTIMOS BLOGS (Si tienes clases de blog definidas, esto funcionará) */
+.latest-blog-section {
+    padding: 50px 20px 100px;
+    text-align: center;
+    max-width: 1200px; /* Ancho máximo para centrar el contenido de la sección */
+    margin: 0 auto;
+}
+/* style.css o layout.css */
+body {
+    background-color: #101820; /* Fondo oscuro base */
+    color: #E8F0F2;            /* Texto base claro */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+/* SOLUCIÓN STICKY FOOTER */
+html, body {
+    height: 100%; /* El HTML y el BODY deben ocupar el 100% de la ventana */
+}
+body {
+    display: flex;
+    flex-direction: column; /* Organiza los elementos verticalmente (Menú, Main, Footer) */
+}
+
+main {
+    flex-grow: 1; /* Esto hace que el contenido principal ocupe todo el espacio restante */
+}
+
+/* Estilo del Footer para Kapitan Kernel */
+.site-footer {
+    background-color: #0A1929; /* Un azul muy oscuro/negro, más oscuro que el fondo */
+    color: #AAB7C4;
+    padding: 30px 0;
+    text-align: center;
+    border-top: 3px solid #4CAF50; /* Línea de acento verde */
+    width: 100%;
+    margin-top: auto; /* IMPORTANTE: Asegura que se empuje al final */
+}
+
+/* Animación de Escritura (Typing Effect) */
+.hero-subtitle {
+    font-size: 1.8em;
+    font-weight: 300;
+    margin-bottom: 30px;
+    display: flex; /* Permite centrar y controlar el ancho del texto animado */
+    justify-content: center;
+}
+
+.typing-text {
+    width: 0; /* Empieza con ancho cero */
+    overflow: hidden; /* Oculta el texto que excede el ancho */
+    white-space: nowrap; /* Mantiene el texto en una sola línea */
+    border-right: 2px solid #4CAF50; /* Cursor parpadeante (el | ) */
+    animation: typing 3s steps(55, end), blink-caret 0.75s step-end infinite;
+    animation-delay: 0.5s; /* Espera medio segundo antes de empezar */
+    animation-fill-mode: forwards; /* Mantiene el estado final de la animación */
+}
+
+/* 1. La animación de 'escritura' (Typing) */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% } /* El texto se revela hasta el 100% de su ancho */
+}
+
+/* 2. La animación del cursor (Blink) */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #4CAF50 } /* El cursor parpadea en verde */
+}

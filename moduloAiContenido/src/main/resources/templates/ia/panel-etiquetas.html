@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administración de Etiquetas</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:insert="~{layout/menu :: main-menu}"></div>
+
+<div class="admin-layout">
+    <div th:insert="~{layout/admin_menu :: admin-sidebar}"></div>
+
+    <main class="admin-content">
+        <h1>Panel de Gestión de Etiquetas 🏷️</h1>
+        <hr>
+
+        <div th:if="${mensaje}" class="alert alert-success">
+            <p th:text="${mensaje}"></p>
+        </div>
+        <div th:if="${error}" class="alert alert-danger">
+            <p th:text="${error}"></p>
+        </div>
+
+        <div class="form-section">
+            <h2>Crear Nueva Etiqueta</h2>
+            <form th:action="@{/admin/etiquetas/guardar}" th:object="${nuevaEtiqueta}" method="post" class="standard-form">
+
+                <input type="hidden" th:field="*{idEtiqueta}" />
+
+                <div class="form-group">
+                    <label for="nombre">Nombre de la Etiqueta:</label>
+                    <input type="text" th:field="*{nombre}" id="nombre" required />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar Etiqueta</button>
+            </form>
+        </div>
+
+        <hr>
+
+        <div class="list-section">
+            <h2>Etiquetas Existentes</h2>
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="etiqueta : ${etiquetas}">
+                    <td th:text="${etiqueta.idEtiqueta}">1</td>
+                    <td th:text="${etiqueta.nombre}">Tecnología</td>
+                    <td>
+                        <a th:href="@{/admin/etiquetas/editar/{id}(id=${etiqueta.idEtiqueta})}"
+                           class="btn btn-info">Editar</a>
+                        <a th:href="@{/admin/etiquetas/eliminar/{id}(id=${etiqueta.idEtiqueta})}"
+                           onclick="return confirm('¿Estás seguro de que quieres eliminar esta etiqueta?')"
+                           class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+/* =======================================================
+   ESTILOS GENERALES Y CONTENEDORES
+   (Solo lo necesario para que el layout principal funcione)
+   ======================================================= */
+body {
+    /* Aquí solo dejamos lo MÁS básico, el fondo y la fuente base se definirán en style.css */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* =======================================================
+   ESTILOS DEL MENÚ PRINCIPAL (NAVBAR)
+   ======================================================= */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Estilos temáticos de la barra que deberán ajustarse a Kapitan Kernel (fondo oscuro) */
+    background-color: #333;
+    padding: 15px 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+}
+
+.nav-links a {
+    color: #ddd;
+    text-decoration: none;
+    padding: 0 15px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #007bff; /* Usar un color de acento, quizás el verde #4CAF50 de Kapitan Kernel */
+}
+
+/* Estilos para el botón de Login/Sesión (Opcional) */
+.nav-links a:last-child {
+    border: 1px solid #007bff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+/* =======================================================
+   ESTILOS DEL FOOTER (Necesitas añadir la clase .site-footer)
+   ======================================================= */
+/* Nota: Si tu footer tenía estilos rotos, debes definirlos aquí.
+   Basándome en el estilo oscuro de Kapitan Kernel: */
+.site-footer {
+    background-color: #101820; /* Color de fondo similar al body, o más oscuro */
+    color: #AAB7C4;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 3px solid #4CAF50; /* Línea de acento verde */
+    width: 100%;
+    /* Si tienes un contenedor principal que aplica margen, el footer debe estar fuera de él
+       o debe ser forzado a 100% de ancho, generalmente el footer va fuera del content-container. */
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administración de Noticias</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:insert="~{layout/menu :: main-menu}"></div>
+
+<div class="admin-layout">
+    <div th:insert="~{layout/admin_menu :: admin-sidebar}"></div>
+
+    <main class="admin-content">
+        <h1>Panel de Revisión de Noticias 📰</h1>
+        <hr>
+
+        <div th:if="${mensaje}" class="alert alert-success">
+            <p th:text="${mensaje}"></p>
+        </div>
+        <div th:if="${error}" class="alert alert-danger">
+            <p th:text="${error}"></p>
+        </div>
+
+        <div class="filter-section">
+            <h2>Noticias con Estado: <span th:text="${estadoActual}">PENDIENTE</span></h2>
+
+            <form method="get" th:action="@{/admin/noticias}" class="standard-form filter-form">
+                <div class="form-group">
+                    <label for="estado">Filtrar por Estado:</label>
+                    <select id="estado" name="estado" onchange="this.form.submit()">
+                        <option th:each="estadoEnum : ${estadosDisponibles}"
+                                th:value="${estadoEnum.name()}"
+                                th:text="${estadoEnum.name()}"
+                                th:selected="${estadoEnum.name() == estadoActual}">PENDIENTE</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="list-section">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>Título y Descripción</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="noticia : ${noticias}">
+                    <td>
+                        <a th:href="${noticia.url}" target="_blank" th:text="${noticia.title}">Noticia de Ejemplo</a>
+                        <p style="font-size: 0.8em; color: #666;" th:text="${noticia.description}"></p>
+                    </td>
+                    <td>
+                        <span th:classappend="'estado-' + ${noticia.estadoProcesamiento.name().toLowerCase()}" th:text="${noticia.estadoProcesamiento.name()}">PENDIENTE</span>
+                    </td>
+                    <td th:text="${#temporals.format(noticia.publishedAt, 'dd-MM-yyyy HH:mm')}">2025-10-25</td>
+                    <td>
+                        <form th:action="@{/admin/noticias/{id}/aprobar(id=${noticia.idNoticia})}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-success btn-sm" th:disabled="${noticia.estadoProcesamiento.name() == 'APROBADO'}">✅ Aprobar</button>
+                        </form>
+
+                        <form th:action="@{/admin/noticias/{id}/estado/{nuevoEstado}(id=${noticia.idNoticia}, nuevoEstado='RECHAZADO')}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" th:disabled="${noticia.estadoProcesamiento.name() == 'RECHAZADO'}">❌ Rechazar</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>
