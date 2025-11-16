@@ -22,7 +22,40 @@ Kapitan Kernel es un proyecto de software empresarial desarrollado en **Java Spr
 ## 🏛️ Arquitectura y Diseño
 
 El proyecto utiliza una arquitectura de **Monolito Modular** estructurado con **Módulos Maven** para garantizar la **Separación de Responsabilidades (SoC)** y la escalabilidad.
+---
 
+## 💾 Diseño de la Persistencia (MySQL / JPA)
+
+El proyecto se sustenta sobre una Base de Datos relacional, cuyo diseño de esquema demuestra la complejidad y las relaciones de los diferentes módulos (Blog, Tienda, Noticias). Las entidades **JPA** (`@Entity`) mapean directamente este esquema, centralizado en el `moduloEntidades`.
+
+* **Destaca:** Mapeo de la tabla `noticias_externas` para el API de GNews, las tablas `usuarios`/`tipos_usuarios` para **Spring Security (RBAC)**, y la estructura de `productos`/`pedidos` para el futuro **E-commerce**.
+
+![Diagrama de Entidad-Relación (MySQL)](../KapitanKernel/docs/mysql_tablas.png)
+
+---
+
+## 📸 Evidencia Visual: Lógica de Negocio y Seguridad
+
+Para validar la solidez del sistema y el alcance del proyecto **MVP (Blog)**, se muestran capturas clave del **Panel de Administración** (acceso protegido por Spring Security).
+
+### A. Core del CMS: Gestión de Entradas y SEO
+Se muestra la capacidad de crear y gestionar entradas del blog, incluyendo la `Meta Descripción (SEO)` y la selección de `Categorías`, confirmando el enfoque en el **Marketing Digital**.
+
+![Gestión de Entradas del Blog (Posts) con Meta Descripción SEO](../KapitanKernel/docs/Captura%20de%20pantalla%202025-11-16%20203025.png)
+
+### B. Gestión Avanzada de Usuarios y Roles (Spring Security)
+Esta funcionalidad valida la implementación del **Control de Acceso Basado en Roles (RBAC)** y el uso de **Thymeleaf** para el frontend de administración.
+
+![Gestión de Tipos de Usuario (Roles)](./docs/Captura%20de%20pantalla%202025-11-16%20202702.png)
+
+### C. Automatización de Contenido (Módulo AI Contenido)
+La interfaz para configurar la **Búsqueda Automática de Noticias** demuestra el manejo de tareas programadas y la lógica de búsqueda con **Palabras Clave Booleanas** (`OR`), un pilar de la integración API.
+
+![Panel de Administración de Búsquedas IA con Configuración Programada](./docs/Captura%20de%20pantalla%202025-11-16%20203112.png)
+
+---
+
+---
 ### Módulos Principales:
 1.  **`blog-base`**: Módulo principal del CMS (funcionalidad base completada - MVP).
 2.  **`moduloEntidades`**: Define los modelos de datos **JPA** compartidos.
